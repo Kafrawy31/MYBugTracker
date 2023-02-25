@@ -10,10 +10,14 @@ from .serializers import *
 def apiOverview(request):
     api_urls = {
         'List' : '/ticket-list/',
-        'Details' : '/ticket-details/<str:pk>',
-        'Create' : '/ticket-create/',
-        'Update' : '/ticket-update/<str:pk>',
-        'Delete' : '/ticket-delete/<str:pk>',
+        'TicketDetails' : '/ticket-details/<str:pk>',
+        'TicketCreate' : '/ticket-create/',
+        'TicketUpdate' : '/ticket-update/<str:pk>',
+        'TicketDelete' : '/ticket-delete/<str:pk>',
+        'ProjectList' : '/project-list',
+        'ProjectDetails' : '/project-details/<str:pk>',
+        'ProjectCreate' : '/project-create',
+        'ProjectUpdate' : '/project-update/<str:pk>',
     }
     
     
