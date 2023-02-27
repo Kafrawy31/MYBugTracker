@@ -1,10 +1,18 @@
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.views import View
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response 
 from .models import *
 from .serializers import *
+
+from rest_framework import generics,filters
+
+from django_filters.rest_framework import DjangoFilterBackend
+
+
+
 
 @api_view(['GET'])
 def apiOverview(request):
@@ -24,11 +32,21 @@ def apiOverview(request):
     return Response(api_urls)
 
 
-@api_view(['GET'])
-def ticketList(request):
-    Tickets = Ticket.objects.all()
-    serializer = TicketSerializer(Tickets, many=True)
-    return Response(serializer.data)
+
+class ticketList(generics.ListAPIView):
+    queryset = Ticket.objects.all()
+    serializer_class = TicketSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['TicketProject__ProjectName',
+                     'TicketId',
+                     'TicketDescription',
+                     'TicketPriority',
+                     'TicketPoints',
+                     'TicketStatus',
+                     'TicketSubmittedBy__UserName',
+                     'TicketAssignedTo__UserName'
+                     ]
+
 
 @api_view(['GET'])
 def ticketDetails(request,pk):
@@ -92,3 +110,4 @@ def projectUpdate(request,pk):
         serializer.save()
     
     return Response(serializer.data)
+

@@ -52,7 +52,7 @@ class Ticket(models.Model):
         
     ])
     TicketProject = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="tproject")
-    ticketassignedto = models.ForeignKey(DevUser, on_delete=models.DO_NOTHING, related_name="assignedto", default=None, null=True, blank=True)
+    TicketAssignedTo = models.ForeignKey(DevUser, on_delete=models.DO_NOTHING, related_name="assignedto", default=None, null=True, blank=True)
     TicketSubmittedBy = models.ForeignKey(DevUser, on_delete=models.DO_NOTHING, related_name="Ticket_submitted_by", default=None)
 
     

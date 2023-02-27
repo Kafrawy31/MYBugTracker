@@ -1,9 +1,10 @@
 from django.urls import path
 from . import views
+from .views import *
 
 urlpatterns = [
     path('', views.apiOverview, name = 'api'),
-    path('ticket-list/', views.ticketList, name = 'ticket-list'),
+    path('ticket-list/', ticketList.as_view(), name = 'ticket-list'),
     path('ticket-details/<str:pk>', views.ticketDetails, name = 'ticket-details'),
     path('ticket-create/', views.ticketCreate, name = 'ticket-create'),
     path('ticket-update/<str:pk>', views.ticketUpdate, name = 'ticket-update'),
