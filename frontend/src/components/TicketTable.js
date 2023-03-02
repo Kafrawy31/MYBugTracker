@@ -23,7 +23,8 @@ export default function TicketTable({ tickets, search }) {
               : ticket.TicketDescription.toLowerCase().includes(search) ||
                   ticket.TicketStatus.toLowerCase().includes(search) ||
                   ticket.TicketPriority.toLowerCase().includes(search) ||
-                  ticket.TicketSubmittedBy.toLowerCase().includes(search);
+                  ticket.TicketSubmittedBy.toLowerCase().includes(search) ||
+                  ticket.TicketProject.toLowerCase().includes(search);
           })
           .map((ticket) => {
             return (

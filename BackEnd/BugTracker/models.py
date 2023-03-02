@@ -23,7 +23,7 @@ class DevUser(models.Model):
     UserName = models.CharField(max_length=26)
     UserEmail = models.EmailField(max_length=60)
     UserPassword = models.CharField(max_length=16)
-    UserPoints = models.IntegerField(default=0)
+    UserPoints = models.IntegerField(default=0, editable=False)
     UserRole = models.TextField(max_length=12, choices=UserRoles.choices, null=True)
     UserProject = models.ManyToManyField(Project, blank=True)
     

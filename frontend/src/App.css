@@ -1,3 +1,22 @@
 * {
-  flex: auto;
+}
+
+.Wrap--Register--Page {
+  display: block;
+}
+
+.SignUp--Title {
+  text-align: center;
+  position: relative;
+  padding-top: 100px;
+}
+
+.Wrap--Register {
+  width: 40%;
+  margin: auto;
+}
+
+.Register--Button {
+  display: flex;
+  align-items: center;
 }
