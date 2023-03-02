@@ -19,8 +19,7 @@ export default function ProjectTable({ projects, search }) {
               ? project
               : project.ProjectName.toLowerCase().includes(search) ||
                   project.ProjectDescription.toLowerCase().includes(search) ||
-                  project.ProjectStatus.toLowerCase().includes(search) ||
-                  project.TicketProject.toLowerCase().includes(search);
+                  project.ProjectStatus.toLowerCase().includes(search);
           })
           .map((project) => {
             return (
@@ -29,7 +28,6 @@ export default function ProjectTable({ projects, search }) {
                 <td>{project.ProjectName}</td>
                 <td>{project.ProjectDescription}</td>
                 <td>{project.ProjectStatus}</td>
-                <td>{project.ProjectPoints}</td>
                 <td>
                   <a href="#"></a>
                   Edit

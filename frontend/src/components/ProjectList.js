@@ -4,34 +4,38 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import ProjectTable from "./ProjectTable.js";
 
-export default function TicketList(props) {
-  const [ticketData, setTicketData] = useState([]);
+export default function ProjectList(props) {
+  const [projectData, setProjectData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [search, setSearch] = useState("");
-  console.log(search);
+  const [projectSearch, setProjectSearch] = useState("");
+  console.log(projectSearch);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios(
-          `http://127.0.0.1:8000/api/project-list/?search=${search}`
+          `http://127.0.0.1:8000/api/project-list/?search=${projectSearch}`
         );
-        setTicketData(response.data);
+        setProjectData(response.data);
         console.log(response.data);
       } catch (err) {}
     };
 
     fetchData();
-  }, [search]);
+  }, [projectSearch]);
 
   return (
     <div>
       <input
         type="text"
-        onChange={(e) => setSearch(e.target.value)}
+        onChange={(e) => setProjectSearch(e.target.value)}
         placeholder="Search"
       />
-      <ProjectTable tickets={ticketData} loading={isLoading} search={search} />
+      <ProjectTable
+        projects={projectData}
+        loading={isLoading}
+        search={projectSearch}
+      />
     </div>
   );
 }
