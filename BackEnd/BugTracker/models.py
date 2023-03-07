@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 
 class Project(models.Model):
     class PStatus(models.TextChoices):
@@ -14,13 +15,13 @@ class Project(models.Model):
     def __str__(self):
         return self.ProjectName    
 
-class DevUser(models.Model):
+class DevUser (models.Model):
     class UserRoles(models.TextChoices):
         Developer = 'Developer', "DEV"
         Senior = 'Senior', "SEN"
         Admin = 'Admin', "ADM"
     UserId = models.AutoField(primary_key=True)
-    UserName = models.CharField(max_length=26)
+    UserName = models.CharField(max_length=26, unique=True)
     UserEmail = models.EmailField(max_length=60)
     UserPassword = models.CharField(max_length=16)
     UserPoints = models.IntegerField(default=0, editable=False)
