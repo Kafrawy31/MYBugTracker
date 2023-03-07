@@ -4,10 +4,9 @@ import ProjectList from "../components/ProjectList.js";
 import AuthContext from "../context/AuthContext.js";
 
 function Homepage() {
-  let { name } = useContext(AuthContext);
+  let { user } = useContext(AuthContext);
   return (
     <div>
-      <h3>hello {name}</h3>
       <TicketList />
       <ProjectList />
     </div>
