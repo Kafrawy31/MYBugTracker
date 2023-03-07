@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "react-bootstrap/";
+import { Link } from "react-router-dom";
 
 export default function Register() {
   return (
@@ -35,9 +36,13 @@ export default function Register() {
               placeholder="Re-Enter Password"
             />
           </div>
-          <Button className="Register--Button" variant="outline-success">
-            Success
-          </Button>
+          <div>
+            <Link to="/login">
+              <Button className="Register--Button" variant="outline-success">
+                Success
+              </Button>
+            </Link>
+          </div>
         </form>
       </div>
     </div>
