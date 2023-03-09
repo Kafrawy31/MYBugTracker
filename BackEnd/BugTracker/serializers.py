@@ -20,3 +20,8 @@ class ProjectSerializer(serializers.ModelSerializer):
         fields = '__all__'
         
         
+class DevUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DevUser
+        fields = '__all__'
+        

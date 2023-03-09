@@ -17,5 +17,6 @@ urlpatterns = [
     path('project-create/', views.projectCreate, name = 'project-create'),
     path('project-update/<str:pk>', views.projectUpdate, name = 'project-update'),
     path('token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh')
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('devuser/<str:pk>', views.DevUserDetails, name='devuser')
 ]

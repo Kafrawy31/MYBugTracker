@@ -17,8 +17,8 @@ function Header() {
           <Nav className="me-auto">
             <Nav.Link href="#home">Home</Nav.Link>
             {user ? (
-              <Link to="/Login">
-                <Nav.Link onClick={userLogout}>Logout</Nav.Link>
+              <Link to="/Login" onClick={userLogout}>
+                Logout
               </Link>
             ) : (
               <Nav.Link href="#link">Login</Nav.Link>

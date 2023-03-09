@@ -53,17 +53,21 @@ export const AuthProvider = ({ children }) => {
   let contextData = {
     userLogin: userLogin,
     user: user,
+    authToken: authToken,
     userLogout: userLogout,
   };
 
   let updateToken = async () => {
-    console.log("token updated");
+    if (loading) {
+      setLoading(false);
+    }
+
     let response = await fetch("http://localhost:8000/api/token/refresh/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ refresh: authToken.refresh }),
+      body: JSON.stringify({ refresh: authToken?.refresh }),
     });
     let data = await response.json();
 
@@ -78,10 +82,15 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     let interval = setInterval(() => {
-      if (authToken) {
+      if (loading) {
         updateToken();
       }
-    }, 3000);
+
+      if (authToken) {
+        updateToken();
+        console.log(jwt_decode(localStorage.getItem("authTokens")));
+      }
+    }, 240000);
     return () => clearInterval(interval);
   }, [authToken, loading]);
   return (

@@ -1,12 +1,15 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.views import View
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response 
 from .models import *
 from .serializers import *
 from rest_framework import generics,filters
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
+
 
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -105,11 +108,6 @@ class projectList(generics.ListAPIView):
                      'ProjectStatus'
                      ]
 
-# @api_view(['GET'])
-# def projectList(request):
-#     projects = Project.objects.all()
-#     serializer = ProjectSerializer(projects, many=True)
-#     return Response(serializer.data)
 
 @api_view(['GET'])
 def projectDetails(request,pk):
@@ -138,3 +136,10 @@ def projectUpdate(request,pk):
     
     return Response(serializer.data)
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def DevUserDetails(request,pk):
+    devUser = DevUser.objects.get(user=pk)
+    serializer = DevUserSerializer(devUser, many = False)
+    return Response(serializer.data)
+    

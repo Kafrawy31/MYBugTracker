@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager,User
 
 class Project(models.Model):
     class PStatus(models.TextChoices):
@@ -21,16 +21,14 @@ class DevUser (models.Model):
         Senior = 'Senior', "SEN"
         Admin = 'Admin', "ADM"
     UserId = models.AutoField(primary_key=True)
-    UserName = models.CharField(max_length=26, unique=True)
-    UserEmail = models.EmailField(max_length=60)
-    UserPassword = models.CharField(max_length=16)
     UserPoints = models.IntegerField(default=0, editable=False)
-    UserRole = models.TextField(max_length=12, choices=UserRoles.choices, null=True)
+    UserRole = models.TextField(max_length=12, choices=UserRoles.choices, default="DEV")
     UserProject = models.ManyToManyField(Project, blank=True)
+    user = models.ForeignKey(User, null = False, on_delete=models.CASCADE)
     
     
     def __str__(self):
-        return self.UserName
+        return str(self.user)
 
 class Ticket(models.Model):
     class TPriority(models.TextChoices):
@@ -53,8 +51,8 @@ class Ticket(models.Model):
         
     ])
     TicketProject = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="tproject")
-    TicketAssignedTo = models.ForeignKey(DevUser, on_delete=models.DO_NOTHING, related_name="assignedto", default=None, null=True, blank=True)
-    TicketSubmittedBy = models.ForeignKey(DevUser, on_delete=models.DO_NOTHING, related_name="Ticket_submitted_by", default=None)
+    TicketAssignedTo = models.ForeignKey(DevUser, on_delete=models.CASCADE, related_name="assignedto", default=None, null=True, blank=True)
+    TicketSubmittedBy = models.ForeignKey(DevUser, on_delete=models.CASCADE, related_name="Ticket_submitted_by", default=None)
 
     
     def __str__(self):
