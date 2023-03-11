@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const AuthContext = createContext();
 
@@ -88,7 +89,6 @@ export const AuthProvider = ({ children }) => {
 
       if (authToken) {
         updateToken();
-        console.log(jwt_decode(localStorage.getItem("authTokens")));
       }
     }, 240000);
     return () => clearInterval(interval);

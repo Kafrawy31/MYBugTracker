@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import { Table } from "react-bootstrap";
+import { BrowserRouter as Router, Link } from "react-router-dom";
+import ProjectContext from "../context/ProjectContext.js";
 export default function ProjectTable({ projects, search }) {
+  let { handleFetchProject } = useContext(ProjectContext);
   return (
     <Table striped bordered>
       <thead>
@@ -29,8 +32,12 @@ export default function ProjectTable({ projects, search }) {
                 <td>{project.ProjectDescription}</td>
                 <td>{project.ProjectStatus}</td>
                 <td>
-                  <a href="#"></a>
-                  Edit
+                  <Link
+                    onClick={() => handleFetchProject(project.ProjectId)}
+                    to={`project/${project.ProjectId}`}
+                  >
+                    edit
+                  </Link>
                 </td>
               </tr>
             );
