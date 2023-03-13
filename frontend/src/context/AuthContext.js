@@ -20,6 +20,7 @@ export const AuthProvider = ({ children }) => {
   );
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const [devUser, setDevUser] = useState({});
 
   let userLogin = async (event) => {
     event.preventDefault();
@@ -51,11 +52,33 @@ export const AuthProvider = ({ children }) => {
     navigate("/login");
   };
 
+  let getUser = async () => {
+    let response = await fetch(
+      `http://127.0.0.1:8000/api/devuser/${user.user_id}`,
+      {
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+          Authorization: "Bearer " + String(authToken.access),
+        },
+      }
+    );
+    let data = await response.json();
+    if (response.status === 200) {
+      setDevUser(data);
+      console.log(user);
+    } else if (response.status === "unauthorized") {
+      userLogout();
+    }
+  };
+
   let contextData = {
     userLogin: userLogin,
     user: user,
     authToken: authToken,
     userLogout: userLogout,
+    devUser: devUser,
+    getUser: getUser,
   };
 
   let updateToken = async () => {

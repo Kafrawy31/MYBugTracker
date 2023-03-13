@@ -1,6 +1,10 @@
 import React from "react";
 import { Table } from "react-bootstrap";
-export default function TicketTable({ tickets, search }) {
+export default function TicketTable({
+  tickets,
+  search = "",
+  ticketTerenary = true,
+}) {
   return (
     <Table striped bordered>
       <thead>
@@ -18,16 +22,17 @@ export default function TicketTable({ tickets, search }) {
       <tbody>
         {tickets
           .filter((ticket) => {
-            return search.toLowerCase() === ""
+            return search === ""
               ? ticket
               : ticket.TicketDescription.toLowerCase().includes(search) ||
                   ticket.TicketStatus.toLowerCase().includes(search) ||
                   ticket.TicketPriority.toLowerCase().includes(search) ||
-                  ticket.TicketSubmittedBy.toLowerCase().includes(search) ||
+                  ticket.TicketSubmittedBy?.toLowerCase().includes(search) ||
+                  ticket.TicketAssignedTo?.includes(search) ||
                   ticket.TicketProject.toLowerCase().includes(search);
           })
           .map((ticket) => {
-            return (
+            return ticketTerenary ? (
               <tr key={ticket.TicketId} className="tickeTable">
                 <td>{ticket.TicketId}</td>
                 <td>{ticket.TicketDescription}</td>
@@ -41,7 +46,7 @@ export default function TicketTable({ tickets, search }) {
                 <td>{ticket.TicketAssignedTo}</td>
                 <td>{ticket.TicketSubmittedBy}</td>
               </tr>
-            );
+            ) : null;
           })}
       </tbody>
     </Table>

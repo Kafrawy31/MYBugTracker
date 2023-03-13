@@ -61,8 +61,8 @@ class ticketList(generics.ListAPIView):
                      'TicketPriority',
                      'TicketPoints',
                      'TicketStatus',
-                     'TicketSubmittedBy__UserName',
-                     'TicketAssignedTo__UserName'
+                     'TicketSubmittedBy__username',
+                     'TicketAssignedTo__username'
                      ]
 
 
