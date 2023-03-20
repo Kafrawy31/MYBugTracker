@@ -11,6 +11,8 @@ export const ProjectContextProvider = ({ children }) => {
   const [project, setProject] = useState({});
   const [projectId, setProjectId] = useState(null);
   const [tickets, setTickets] = useState([]);
+  const [ticket, setTicket] = useState({});
+  const [ticketId, setTicketId] = useState(null);
   const [ticketProject, setTicketProject] = useState(null);
 
   useEffect(() => {
@@ -51,6 +53,31 @@ export const ProjectContextProvider = ({ children }) => {
     fetchTickets();
   }, [ticketProject]);
 
+  useEffect(() => {
+    const fetchTicket = async () => {
+      const response = await fetch(
+        `http://localhost:8000/api/ticket-details/${ticketId}`,
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+
+      if (response.status === 200) {
+        const data = await response.json();
+        setTicket(data);
+      } else {
+        navigate("/homepage");
+      }
+    };
+
+    fetchTicket();
+  }, [ticketId]);
+
+  const handleFetchTicket = (ticketId) => {
+    setTicketId(ticketId);
+  };
+
   const handleFetchTickets = (ticketProject) => {
     setTicketProject(ticketProject);
   };
@@ -59,11 +86,17 @@ export const ProjectContextProvider = ({ children }) => {
     setProjectId(projectId);
   };
 
+  useEffect(() => {
+    const claimTicket = async () => {};
+  });
+
   const projectContextData = {
     handleFetchProject,
     project,
     handleFetchTickets,
     tickets,
+    handleFetchTicket,
+    ticket,
   };
 
   return (

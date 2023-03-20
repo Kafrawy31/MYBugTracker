@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import ProjectTable from "./ProjectTable.js";
 
-export default function ProjectList(props) {
+export default function ProjectList({ userRoles }) {
   const [projectData, setProjectData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [projectSearch, setProjectSearch] = useState("");
@@ -32,6 +32,7 @@ export default function ProjectList(props) {
         placeholder="Search"
       />
       <ProjectTable
+        userRole={userRoles}
         projects={projectData}
         loading={isLoading}
         search={projectSearch}

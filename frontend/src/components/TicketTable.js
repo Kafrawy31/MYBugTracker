@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import AuthContext from "../context/AuthContext.js";
 import { Table } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { Button } from "react-bootstrap/";
+import ProjectContext from "../context/ProjectContext.js";
 export default function TicketTable({
   tickets,
   search = "",
   ticketTerenary = true,
+  userRole,
 }) {
+  let { handleFetchTicket } = useContext(ProjectContext);
+
   return (
     <Table striped bordered>
       <thead>
@@ -45,6 +52,21 @@ export default function TicketTable({
                 </td>
                 <td>{ticket.TicketAssignedTo}</td>
                 <td>{ticket.TicketSubmittedBy}</td>
+                {userRole === "Senior" || userRole === "Admin" ? (
+                  <td>
+                    <Link
+                      onClick={() => handleFetchTicket(ticket.TicketId)}
+                      to={`ticket/${ticket.TicketId}`}
+                    >
+                      edit
+                    </Link>
+                  </td>
+                ) : ticket.TicketStatus === "OP" &&
+                  ticket.TicketAssignedTo === null ? (
+                  <td>
+                    <Button variant="info">Claim</Button>
+                  </td>
+                ) : null}
               </tr>
             ) : null;
           })}

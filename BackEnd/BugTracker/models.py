@@ -30,7 +30,7 @@ class DevUser (models.Model):
     def __str__(self):
         return str(self.user)
 
-class Ticket(models.Model):
+class Ticket(models.Model): 
     class TPriority(models.TextChoices):
         VHigh = 'VH', "Very Important"
         High = 'H', "Important"
@@ -50,9 +50,9 @@ class Ticket(models.Model):
                                                    MinValueValidator(1)
         
     ])
-    TicketProject = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="tproject")
-    TicketAssignedTo = models.ForeignKey(User, on_delete=models.CASCADE, related_name="assignedto", default=" ", null=True, blank=True)
-    TicketSubmittedBy = models.ForeignKey(User, on_delete=models.CASCADE, related_name="Ticket_submitted_by", default=None)
+    TicketProject = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="tproject", null=True)
+    TicketAssignedTo = models.ForeignKey(User, on_delete=models.CASCADE, related_name="assignedto", default=None, null=True, blank=True)
+    TicketSubmittedBy = models.ForeignKey(User, on_delete=models.CASCADE, related_name="Ticket_submitted_by", default=None, null = True)
 
     
     def __str__(self):

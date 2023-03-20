@@ -72,11 +72,17 @@ def ticketDetails(request,pk):
     serializer = TicketSerializer(Tickets, many=False)
     return Response(serializer.data)
 
+
+# class userList(generics.ListAPIView):
+#     queryset
+    
+    
+
 @api_view(['POST'])
 def ticketCreate(request):
-    serializer = TicketSerializer(data=request.data)
+    serializer = TicketSerializerPost(data=request.data)
     
-    if serializer.is_valid():
+    if serializer.is_valid(): 
         serializer.save()
     
     return Response(serializer.data)

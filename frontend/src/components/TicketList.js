@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import TicketTable from "./TicketTable.js";
 
-export default function TicketList(props) {
+export default function TicketList({ userRoles }) {
   const [ticketData, setTicketData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [search, setSearch] = useState("");
@@ -31,7 +31,12 @@ export default function TicketList(props) {
         onChange={(e) => setSearch(e.target.value)}
         placeholder="Search"
       />
-      <TicketTable tickets={ticketData} loading={isLoading} search={search} />
+      <TicketTable
+        userRole={userRoles}
+        tickets={ticketData}
+        loading={isLoading}
+        search={search}
+      />
     </div>
   );
 }

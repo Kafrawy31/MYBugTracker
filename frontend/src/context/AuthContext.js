@@ -1,7 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 const AuthContext = createContext();
 
@@ -66,7 +65,6 @@ export const AuthProvider = ({ children }) => {
     let data = await response.json();
     if (response.status === 200) {
       setDevUser(data);
-      console.log(user);
     } else if (response.status === "unauthorized") {
       userLogout();
     }
@@ -113,7 +111,7 @@ export const AuthProvider = ({ children }) => {
       if (authToken) {
         updateToken();
       }
-    }, 240000);
+    }, 6000);
     return () => clearInterval(interval);
   }, [authToken, loading]);
   return (

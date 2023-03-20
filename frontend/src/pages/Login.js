@@ -1,6 +1,4 @@
 import React, { useContext } from "react";
-import { Button } from "react-bootstrap/";
-import { Link } from "react-router-dom";
 import Header from "../components/Header.js";
 import AuthContext from "../context/AuthContext.js";
 
@@ -10,7 +8,7 @@ export default function Login() {
     <div>
       <Header />
       <div className="Wrap--Register--Page">
-        <h2 className="SignUp--Title">Sign Up</h2>
+        <h2 className="SignUp--Title">Login</h2>
         <div className="Wrap--Register">
           <form onSubmit={userLogin}>
             <div className="Register--Input">
