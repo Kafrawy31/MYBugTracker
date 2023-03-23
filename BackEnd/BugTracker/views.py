@@ -54,7 +54,7 @@ def apiOverview(request):
 class ticketList(generics.ListAPIView):
     queryset = Ticket.objects.all()
     serializer_class = TicketSerializer
-    filter_backends = [filters.SearchFilter]
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['TicketProject__ProjectName',
                      'TicketId',
                      'TicketDescription',
@@ -64,6 +64,8 @@ class ticketList(generics.ListAPIView):
                      'TicketSubmittedBy__username',
                      'TicketAssignedTo__username'
                      ]
+    ordering = ['TicketDateOpened']
+    
 
 
 @api_view(['GET'])
