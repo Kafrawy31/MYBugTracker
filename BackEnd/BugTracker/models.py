@@ -54,6 +54,7 @@ class Ticket(models.Model):
     ])
     TicketDateOpened = models.DateTimeField(blank=True, null=True)
     TicketDateClosed = models.DateTimeField(auto_now_add = False , blank=True, null=True)
+    TicketCodeLocation = models.CharField(max_length=255, blank=True, null=True)
     TicketProject = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="tproject", null=True)
     TicketAssignedTo = models.ForeignKey(User, on_delete=models.CASCADE, related_name="assignedto", default=None, null=True, blank=True)
     TicketSubmittedBy = models.ForeignKey(User, on_delete=models.CASCADE, related_name="Ticket_submitted_by", default=None, null = True)
