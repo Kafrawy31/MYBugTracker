@@ -4,6 +4,7 @@ import "./App.css";
 import "./Reset.css";
 import Register from "./pages/Register.js";
 import Homepage from "./pages/Homepage.js";
+import Account from "./pages/Account.js";
 import Login from "./pages/Login.js";
 import SubmitTicket from "./pages/SubmitTicket.js";
 import Ticket from "./pages/Ticket.js";
@@ -45,6 +46,14 @@ function App() {
                   </Private>
                 }
               ></Route>
+              <Route
+                path="/account"
+                element={
+                  <Private>
+                    <Account />
+                  </Private>
+                }
+              />
             </Routes>
           </ProjectContextProvider>
         </AuthProvider>

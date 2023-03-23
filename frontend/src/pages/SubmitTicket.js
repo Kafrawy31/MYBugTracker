@@ -1,11 +1,11 @@
 import React, { useState, useContext, useEffect } from "react";
 import Header from "../components/Header.js";
 import axios from "axios";
+import moment from "moment";
 import AuthContext from "../context/AuthContext.js";
 
 function SubmitTicket() {
   let { user, getUser, devUser } = useContext(AuthContext);
-
   useEffect(() => {
     getUser();
   }, []);
@@ -19,8 +19,10 @@ function SubmitTicket() {
     TicketStatus: "OP",
     TicketPriority: "VH",
     TicketPoints: 1,
+    TicketDateOpened: moment(),
   });
 
+  console.log(moment().format());
   useEffect(() => {
     const fetchProjects = async () => {
       const response = await axios("http://127.0.0.1:8000/api/project-list/");

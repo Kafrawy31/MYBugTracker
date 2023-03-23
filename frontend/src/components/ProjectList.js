@@ -16,8 +16,8 @@ export default function ProjectList({ userRoles }) {
         const response = await axios(
           `http://127.0.0.1:8000/api/project-list/?search=${projectSearch}`
         );
-        setProjectData(response.data);
-        console.log(response.data);
+        setProjectData(response.data.results);
+        console.log(response.data.results);
       } catch (err) {}
     };
 

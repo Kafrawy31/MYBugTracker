@@ -3,6 +3,7 @@ import AuthContext from "../context/AuthContext.js";
 import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap/";
+import moment from "moment";
 import ProjectContext from "../context/ProjectContext.js";
 export default function TicketTable({
   tickets,
@@ -24,6 +25,7 @@ export default function TicketTable({
           <th>Ticket Project</th>
           <th>Assigned To</th>
           <th>Submitted by</th>
+          <th>Date Opened</th>
         </tr>
       </thead>
       <tbody>
@@ -31,12 +33,12 @@ export default function TicketTable({
           .filter((ticket) => {
             return search === ""
               ? ticket
-              : ticket.TicketDescription.toLowerCase().includes(search) ||
-                  ticket.TicketStatus.toLowerCase().includes(search) ||
-                  ticket.TicketPriority.toLowerCase().includes(search) ||
+              : ticket.TicketDescription?.toLowerCase().includes(search) ||
+                  ticket.TicketStatus?.toLowerCase().includes(search) ||
+                  ticket.TicketPriority?.toLowerCase().includes(search) ||
                   ticket.TicketSubmittedBy?.toLowerCase().includes(search) ||
                   ticket.TicketAssignedTo?.includes(search) ||
-                  ticket.TicketProject.toLowerCase().includes(search);
+                  ticket.TicketProject?.toLowerCase().includes(search);
           })
           .map((ticket) => {
             return ticketTerenary ? (
@@ -52,6 +54,11 @@ export default function TicketTable({
                 </td>
                 <td>{ticket.TicketAssignedTo}</td>
                 <td>{ticket.TicketSubmittedBy}</td>
+                <td>
+                  {moment(ticket.TicketDateOpened).format(
+                    "YYYY-MM-DD h:mm:ss a"
+                  )}
+                </td>
                 {userRole === "Senior" || userRole === "Admin" ? (
                   <td>
                     <Link

@@ -52,7 +52,7 @@ class Ticket(models.Model):
                                                    MinValueValidator(1)
         
     ])
-    TicketDateOpened = models.DateTimeField(blank=False, default=timezone.now)
+    TicketDateOpened = models.DateTimeField(blank=True, null=True)
     TicketDateClosed = models.DateTimeField(auto_now_add = False , blank=True, null=True)
     TicketProject = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="tproject", null=True)
     TicketAssignedTo = models.ForeignKey(User, on_delete=models.CASCADE, related_name="assignedto", default=None, null=True, blank=True)
