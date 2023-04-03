@@ -16,7 +16,7 @@ function Homepage() {
     <div>
       <Header />
       {user && <p> You are logged in as {userRole} </p>}
-      <TicketList userRoles={userRole} />
+      <TicketList userRoles={userRole} thisUser={devUser} />
       <ProjectList userRoles={userRole} />
     </div>
   );

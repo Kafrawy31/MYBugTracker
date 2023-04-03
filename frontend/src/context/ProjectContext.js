@@ -18,6 +18,7 @@ export const ProjectContextProvider = ({ children }) => {
   const [search, setSearch] = useState("");
   const [ticketId, setTicketId] = useState(null);
   const [ticketProject, setTicketProject] = useState(null);
+  const [projects, setProjects] = useState([]);
 
   useEffect(() => {
     const fetchProject = async () => {
@@ -65,7 +66,7 @@ export const ProjectContextProvider = ({ children }) => {
         );
         setAllTickets(response.data.results);
         setNext(response.data.next);
-        setPrev(response.data.prev);
+        setPrev(response.data.previous);
       } catch (err) {}
     };
 
@@ -127,9 +128,18 @@ export const ProjectContextProvider = ({ children }) => {
     setSearch(search);
   };
 
-  useEffect(() => {
-    const claimTicket = async () => {};
-  });
+  const claimTicket = async (ticketId, userId) => {
+    const requestOptions = {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ TicketAssignedTo: userId, TicketStatus: "PE" }),
+    };
+    fetch(`http://127.0.0.1:8000/api/ticket-update/${ticketId}`, requestOptions)
+      .then((response) => console.log(response.status))
+      .then((response) => console.log(response))
+      .catch((error) => alert(error.message));
+    window.location.reload();
+  };
 
   const projectContextData = {
     handleFetchProject,
@@ -145,6 +155,7 @@ export const ProjectContextProvider = ({ children }) => {
     prev,
     search,
     handleSearch,
+    claimTicket,
   };
 
   return (

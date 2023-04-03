@@ -22,7 +22,6 @@ function SubmitTicket() {
     TicketDateOpened: moment(),
   });
 
-  console.log(moment().format());
   useEffect(() => {
     const fetchProjects = async () => {
       const response = await axios("http://127.0.0.1:8000/api/project-list/");

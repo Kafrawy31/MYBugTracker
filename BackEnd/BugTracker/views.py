@@ -89,10 +89,10 @@ def ticketCreate(request):
     
     return Response(serializer.data)
 
-@api_view(['POST'])
+@api_view(['PATCH'])
 def ticketUpdate(request,pk):
     ticket = Ticket.objects.get(TicketId=pk)
-    serializer = TicketSerializer(instance=ticket, data=request.data)
+    serializer = TicketSerializerPost(instance=ticket, data=request.data, partial=True)
     if serializer.is_valid():
         serializer.save()
     
