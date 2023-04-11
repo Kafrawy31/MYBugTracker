@@ -5,9 +5,11 @@ import { Navbar } from "react-bootstrap/";
 import { NavDropdown } from "react-bootstrap/";
 import AuthContext from "../context/AuthContext.js";
 import { Link } from "react-router-dom";
+import ProjectContext from "../context/ProjectContext.js";
 
 function Header() {
   let { user, userLogout } = useContext(AuthContext);
+  let { handleCurrId } = useContext(ProjectContext);
   return (
     <Navbar bg="dark" expand="lg" variant="dark">
       <Container>
@@ -30,7 +32,11 @@ function Header() {
                 <NavDropdown.Item as={Link} to="/SubmitTicket">
                   Submit Ticket
                 </NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/account">
+                <NavDropdown.Item
+                  as={Link}
+                  to="/account"
+                  onClick={() => handleCurrId(user.user_id)}
+                >
                   account
                 </NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.3">

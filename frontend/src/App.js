@@ -8,6 +8,7 @@ import Account from "./pages/Account.js";
 import Login from "./pages/Login.js";
 import SubmitTicket from "./pages/SubmitTicket.js";
 import Ticket from "./pages/Ticket.js";
+import ViewTicket from "./pages/ViewTicket.js";
 import Private from "./utils/Private.js";
 import { AuthProvider } from "./context/AuthContext.js";
 import { ProjectContextProvider } from "./context/ProjectContext.js";
@@ -37,6 +38,10 @@ function App() {
               <Route
                 path="homepage/ticket/:TicketId"
                 element={<Ticket />}
+              ></Route>
+              <Route
+                path="homepage/viewticket/:TicketId"
+                element={<ViewTicket />}
               ></Route>
               <Route
                 path="/SubmitTicket"

@@ -8,10 +8,6 @@ function Project() {
   let { project, tickets } = useContext(ProjectContext);
   let { user, getUser, devUser } = useContext(AuthContext);
 
-  useEffect(() => {
-    getUser();
-  }, []);
-
   return (
     <div>
       <Header />

@@ -1,5 +1,9 @@
 from rest_framework import serializers
 from .models import *
+from django.contrib.auth.models import User
+
+
+
 
 
 # class TicketSerializerProject(serializers.ModelSerializer):
@@ -35,11 +39,21 @@ class ProjectSerializer(serializers.ModelSerializer):
         model = Project
         fields = '__all__'
         
+        
+        
 
         
         
 class DevUserSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = DevUser
         fields = '__all__'
         
+
+class CurrentUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'id')
+        
+

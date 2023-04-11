@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import AuthContext from "../context/AuthContext.js";
 import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -11,9 +11,14 @@ export default function TicketTable({
   ticketTerenary = true,
   userRole,
   user = {},
+  Loading,
 }) {
   let { handleFetchTicket, pagePrev, pageNext, next, prev, claimTicket } =
     useContext(ProjectContext);
+
+  if (tickets.length === 0) {
+    return <div>No tickets to display</div>;
+  }
 
   return (
     <div>
@@ -28,6 +33,7 @@ export default function TicketTable({
             <th>Ticket Project</th>
             <th>Assigned To</th>
             <th>Submitted by</th>
+            <th>Code Location</th>
             <th>Date Opened</th>
           </tr>
         </thead>
@@ -57,6 +63,7 @@ export default function TicketTable({
                   </td>
                   <td>{ticket.TicketAssignedTo}</td>
                   <td>{ticket.TicketSubmittedBy}</td>
+                  <td>{ticket.TicketCodeLocation}</td>
                   <td>
                     {moment(ticket.TicketDateOpened).format(
                       "YYYY-MM-DD h:mm:ss a"

@@ -1,29 +1,21 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import ProjectContext from "../context/ProjectContext.js";
 import TicketTable from "../components/TicketTable.js";
 import Header from "../components/Header.js";
 import AuthContext from "../context/AuthContext.js";
 
 function Account() {
-  //   let { project, tickets } = useContext(ProjectContext);
-  //   let { user, getUser, devUser } = useContext(AuthContext);
-  //   useEffect(() => {
-  //     getUser();
-  //   }, []);
-  //   console.log(user.username);
-  //   return (
-  //     <div>
-  //       <Header />
-  //       {devUser.UserRole}
-  //       <br />
-  //       {project.ProjectName}
-  //       <TicketTable
-  //         userRole={devUser.UserRole}
-  //         tickets={tickets}
-  //         ticketTerenary={user.username}
-  //       />
-  //     </div>
-  //   );
-  //
+  let { user, getUser, devUser } = useContext(AuthContext);
+  let { userTickets } = useContext(ProjectContext);
+  return (
+    <div>
+      <Header />
+      {devUser.UserRole}
+
+      <br />
+      {user.username}
+      <TicketTable userRole={devUser.userRole} tickets={userTickets} />
+    </div>
+  );
 }
 export default Account;

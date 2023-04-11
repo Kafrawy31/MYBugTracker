@@ -20,7 +20,7 @@ export default function TicketList({ userRoles, thisUser }) {
       <TicketTable
         userRole={userRoles}
         tickets={allTickets}
-        loading={isLoading}
+        Loading={false}
         search={search}
         user={thisUser}
       />

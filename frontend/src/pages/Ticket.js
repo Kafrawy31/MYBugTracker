@@ -6,6 +6,7 @@ import axios from "axios";
 function Ticket() {
   let { ticket } = useContext(ProjectContext);
   const [projects, setProjects] = useState([]);
+  const [users, setUsers] = useState([]);
   const [ticketSpread, setTicketSpread] = useState({
     TicketProject: ticket.TicketProject,
     TicketAssignedTo: ticket.TicketAssignedTo,
@@ -16,32 +17,52 @@ function Ticket() {
   });
 
   useEffect(() => {
+    setTicketSpread({
+      TicketProject: ticket.TicketProject,
+      TicketAssignedTo: ticket.TicketAssignedTo,
+      TicketDescription: ticket.TicketDescription,
+      TicketStatus: ticket.TicketStatus,
+      TicketPriority: ticket.TicketPriority,
+      TicketPoints: ticket.TicketPoints,
+    });
+  }, [ticket]);
+
+  useEffect(() => {
     const fetchProjects = async () => {
       const response = await axios("http://127.0.0.1:8000/api/project-list/");
       if (response.status === 200) {
-        console.log(response);
+        setProjects(response.data.results);
       }
     };
     fetchProjects();
   }, []);
 
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const response = await axios("http://127.0.0.1:8000/api/user-list/");
+      if (response.status === 200) {
+        setUsers(response.data.results);
+        console.log(response.data.results);
+      }
+    };
+    fetchUsers();
+  }, []);
+
   const handleChange = (event) => {
-    setTicketSpread({ ...ticket, [event.target.name]: event.target.value });
+    setTicketSpread({
+      ...ticketSpread,
+      [event.target.name]: event.target.value,
+    });
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    const requestOptions = {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(ticketSpread),
-    };
-    fetch(
-      `http://127.0.0.1:8000/api/ticket-update/${ticket.TicketId}`,
-      requestOptions
-    )
-      .then((response) => console.log(response.status))
-      .then((data) => console.log(data))
-      .catch((error) => alert(error.message));
+
+    axios
+      .patch(
+        `http://127.0.0.1:8000/api/ticket-update/${ticket.TicketId}`,
+        ticketSpread
+      )
+      .then(console.log(ticketSpread));
   };
 
   return (
@@ -53,14 +74,30 @@ function Ticket() {
           Ticket Project:
           <select
             name="TicketProject"
-            value={ticket.TicketProject}
+            value={ticketSpread.TicketProject}
             onChange={handleChange}
           >
-            <option>select Projcet</option>
             {projects.map((project) => {
               return (
                 <option key={project.ProjectId} value={project.ProjectId}>
                   {project.ProjectName}
+                </option>
+              );
+            })}
+          </select>
+        </label>
+
+        <label>
+          Assigned User:
+          <select
+            name="TicketAssignedTo"
+            value={ticketSpread.TicketAssignedTo}
+            onChange={handleChange}
+          >
+            {users.map((user) => {
+              return (
+                <option key={user.id} value={user.id}>
+                  {user.username}
                 </option>
               );
             })}
@@ -71,8 +108,8 @@ function Ticket() {
           Description:
           <textarea
             name="TicketDescription"
-            value={ticket.TicketDescription}
-            // onChange={handleChange}
+            value={ticketSpread.TicketDescription}
+            onChange={handleChange}
           />
         </label>
         <br />
@@ -80,8 +117,8 @@ function Ticket() {
           Priority:
           <select
             name="TicketPriority"
-            value={ticket.TicketPriority}
-            // onChange={handleChange}
+            value={ticketSpread.TicketPriority}
+            onChange={handleChange}
           >
             <option value="VH">Very High</option>
             <option value="H">High</option>

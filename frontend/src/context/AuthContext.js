@@ -70,15 +70,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  let contextData = {
-    userLogin: userLogin,
-    user: user,
-    authToken: authToken,
-    userLogout: userLogout,
-    devUser: devUser,
-    getUser: getUser,
-  };
-
   let updateToken = async () => {
     if (loading) {
       setLoading(false);
@@ -114,6 +105,15 @@ export const AuthProvider = ({ children }) => {
     }, 60000);
     return () => clearInterval(interval);
   }, [authToken, loading]);
+
+  let contextData = {
+    userLogin: userLogin,
+    user: user,
+    authToken: authToken,
+    userLogout: userLogout,
+    devUser: devUser,
+    getUser: getUser,
+  };
   return (
     <AuthContext.Provider value={contextData}>{children}</AuthContext.Provider>
   );

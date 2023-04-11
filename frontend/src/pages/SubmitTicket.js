@@ -3,9 +3,11 @@ import Header from "../components/Header.js";
 import axios from "axios";
 import moment from "moment";
 import AuthContext from "../context/AuthContext.js";
+import { useNavigate } from "react-router-dom";
 
 function SubmitTicket() {
   let { user, getUser, devUser } = useContext(AuthContext);
+  const navigate = useNavigate();
   useEffect(() => {
     getUser();
   }, []);
@@ -16,17 +18,20 @@ function SubmitTicket() {
     TicketAssignedTo: null,
     TicketSubmittedBy: user.user_id,
     TicketDescription: "",
+    TicketObserved: "",
+    TicketExpected: "",
     TicketStatus: "OP",
     TicketPriority: "VH",
     TicketPoints: 1,
     TicketDateOpened: moment(),
+    TicketCodeLocation: "",
   });
 
   useEffect(() => {
     const fetchProjects = async () => {
       const response = await axios("http://127.0.0.1:8000/api/project-list/");
       if (response.status === 200) {
-        setProjects(response.data);
+        setProjects(response.data.results);
       }
     };
     fetchProjects();
@@ -43,6 +48,7 @@ function SubmitTicket() {
       .then((response) => console.log(response.status))
       .then((data) => console.log(data))
       .catch((error) => alert(error.message));
+    navigate("/homepage");
   };
 
   const handleChange = (event) => {
@@ -74,10 +80,38 @@ function SubmitTicket() {
         </label>
         <br />
         <label>
+          Code Location:
+          <input
+            type="text"
+            name="TicketCodeLocation"
+            value={ticket.TicketCodeLocation}
+            onChange={handleChange}
+          />
+        </label>
+        <br />
+        <label>
           Description:
           <textarea
             name="TicketDescription"
             value={ticket.TicketDescription}
+            onChange={handleChange}
+          />
+        </label>
+        <br />
+        <label>
+          Observed Behavior:
+          <textarea
+            name="TicketObserved"
+            value={ticket.TicketObserved}
+            onChange={handleChange}
+          />
+        </label>
+        <br />
+        <label>
+          Expected Behavior:
+          <textarea
+            name="TicketExpected"
+            value={ticket.TicketExpected}
             onChange={handleChange}
           />
         </label>

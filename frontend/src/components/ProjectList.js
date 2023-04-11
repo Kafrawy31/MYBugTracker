@@ -8,7 +8,6 @@ export default function ProjectList({ userRoles }) {
   const [projectData, setProjectData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [projectSearch, setProjectSearch] = useState("");
-  console.log(projectSearch);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,7 +16,6 @@ export default function ProjectList({ userRoles }) {
           `http://127.0.0.1:8000/api/project-list/?search=${projectSearch}`
         );
         setProjectData(response.data.results);
-        console.log(response.data.results);
       } catch (err) {}
     };
 

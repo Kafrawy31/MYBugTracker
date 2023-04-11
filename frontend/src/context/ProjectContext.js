@@ -19,6 +19,8 @@ export const ProjectContextProvider = ({ children }) => {
   const [ticketId, setTicketId] = useState(null);
   const [ticketProject, setTicketProject] = useState(null);
   const [projects, setProjects] = useState([]);
+  const [curr_id, setCurr_Id] = useState(null);
+  const [userTickets, setUserTickets] = useState([]);
 
   useEffect(() => {
     const fetchProject = async () => {
@@ -73,6 +75,20 @@ export const ProjectContextProvider = ({ children }) => {
     fetchAllTickets();
   }, [search]);
 
+  useEffect(() => {
+    const fetchUserTickets = async () => {
+      try {
+        const response = await axios(
+          `http://127.0.0.1:8000/api/assigned-tickets/${curr_id}`
+        );
+        setUserTickets(response.data);
+        console.log(userTickets);
+      } catch (err) {}
+    };
+
+    fetchUserTickets();
+  }, [curr_id]);
+
   const pageNext = async (next) => {
     try {
       const response = await axios(next);
@@ -116,6 +132,10 @@ export const ProjectContextProvider = ({ children }) => {
     setTicketId(ticketId);
   };
 
+  const handleCurrId = (curr_id) => {
+    setCurr_Id(curr_id);
+  };
+
   const handleFetchTickets = (ticketProject) => {
     setTicketProject(ticketProject);
   };
@@ -134,11 +154,15 @@ export const ProjectContextProvider = ({ children }) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ TicketAssignedTo: userId, TicketStatus: "PE" }),
     };
+
     fetch(`http://127.0.0.1:8000/api/ticket-update/${ticketId}`, requestOptions)
-      .then((response) => console.log(response.status))
-      .then((response) => console.log(response))
+      .then((response) => {
+        console.log(response.status);
+        console.log(response);
+        navigate("/homepage");
+        window.location.reload();
+      })
       .catch((error) => alert(error.message));
-    window.location.reload();
   };
 
   const projectContextData = {
@@ -156,6 +180,8 @@ export const ProjectContextProvider = ({ children }) => {
     search,
     handleSearch,
     claimTicket,
+    handleCurrId,
+    userTickets,
   };
 
   return (

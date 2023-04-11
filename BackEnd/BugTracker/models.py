@@ -26,7 +26,8 @@ class DevUser (models.Model):
     UserPoints = models.IntegerField(default=0, editable=False)
     UserRole = models.TextField(max_length=12, choices=UserRoles.choices, default="DEV")
     UserProject = models.ManyToManyField(Project, blank=True)
-    user = models.ForeignKey(User, null = False, on_delete=models.CASCADE)
+    user = models.ForeignKey(User ,null = False, on_delete=models.CASCADE)
+
     
     
     def __str__(self):
@@ -45,6 +46,8 @@ class Ticket(models.Model):
         
     TicketId = models.AutoField(primary_key=True)
     TicketDescription = models.CharField(max_length=255)
+    TicketObserved=models.CharField(max_length=1000, blank=True, null=True)
+    TicketExpected = models.CharField(max_length=1000, blank=True, null=True)
     TicketStatus = models.CharField(max_length=20, choices=TStatus.choices )
     TicketPriority = models.CharField(max_length=16,choices=TPriority.choices)
     TicketPoints = models.IntegerField(default=1,

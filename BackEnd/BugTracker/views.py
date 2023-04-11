@@ -42,6 +42,7 @@ def apiOverview(request):
         'ProjectDetails' : '/project-details/<str:pk>',
         'ProjectCreate' : '/project-create',
         'ProjectUpdate' : '/project-update/<str:pk>',
+        'UserList' : '/user-list',
         'Token' : '/token',
         'TokenRefresh' : '/token/refresh',
     }
@@ -73,6 +74,7 @@ def ticketDetails(request,pk):
     Tickets = Ticket.objects.get(TicketId=pk)
     serializer = TicketSerializer(Tickets, many=False)
     return Response(serializer.data)
+
 
 
 # class userList(generics.ListAPIView):
@@ -149,5 +151,21 @@ def projectUpdate(request,pk):
 def DevUserDetails(request,pk):
     devUser = DevUser.objects.get(user=pk)
     serializer = DevUserSerializer(devUser, many = False)
+    return Response(serializer.data)
+    
+class UserList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = CurrentUserSerializer
+    
+@api_view(['GET'])
+def ticketByProject(request,pk):
+    Tickets = Ticket.objects.filter(TicketProject=pk)
+    serializer = TicketSerializer(Tickets, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def ticketByUser(request,pk):
+    Tickets = Ticket.objects.filter(TicketAssignedTo=pk)
+    serializer = TicketSerializer(Tickets, many=True)
     return Response(serializer.data)
     
