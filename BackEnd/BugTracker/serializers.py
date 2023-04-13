@@ -57,3 +57,5 @@ class CurrentUserSerializer(serializers.ModelSerializer):
         fields = ('username', 'email', 'id')
         
 
+        
+

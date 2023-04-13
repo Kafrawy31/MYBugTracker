@@ -20,6 +20,7 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('devuser/<str:pk>', views.DevUserDetails, name='devuser'),
     path('user-list/',UserList.as_view(), name='user-list'),
+    path('devuser-list/', views.devUserList, name='devuser-list'),
     path('assigned-tickets/<str:pk>/', views.ticketByUser, name = 'assigned-tickets'),
     path('project-tickets/<str:pk>/', views.ticketByProject, name = 'ticket-project'),
 ]

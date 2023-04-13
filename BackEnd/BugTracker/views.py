@@ -156,6 +156,12 @@ def DevUserDetails(request,pk):
 class UserList(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = CurrentUserSerializer
+
+@api_view(['GET'])
+def devUserList(request):
+    devs = DevUser.objects.all()
+    serializer = DevUserSerializer(devs, many = True)
+    return Response(serializer.data)
     
 @api_view(['GET'])
 def ticketByProject(request,pk):
@@ -168,4 +174,5 @@ def ticketByUser(request,pk):
     Tickets = Ticket.objects.filter(TicketAssignedTo=pk)
     serializer = TicketSerializer(Tickets, many=True)
     return Response(serializer.data)
+    
     

@@ -24,11 +24,19 @@ class DevUser (models.Model):
         Admin = 'Admin', "ADM"
     UserId = models.AutoField(primary_key=True)
     UserPoints = models.IntegerField(default=0, editable=False)
+    MonthlyPoints = models.IntegerField(default=0, editable=False)
+    last_reset = models.DateTimeField(null=True)
     UserRole = models.TextField(max_length=12, choices=UserRoles.choices, default="DEV")
     UserProject = models.ManyToManyField(Project, blank=True)
     user = models.ForeignKey(User ,null = False, on_delete=models.CASCADE)
 
-    
+    def reset_points_monthly(self):
+        now = datetime.now()
+        if now.day == 1 and now.hour == 0 and now.minute == 0 and now.second == 0:
+            self.MonthlyPoints = 0
+            self.last_reset = now
+            self.save()
+
     
     def __str__(self):
         return str(self.user)

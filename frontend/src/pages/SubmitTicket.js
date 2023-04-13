@@ -49,6 +49,7 @@ function SubmitTicket() {
       .then((data) => console.log(data))
       .catch((error) => alert(error.message));
     navigate("/homepage");
+    window.location.reload();
   };
 
   const handleChange = (event) => {
@@ -68,13 +69,17 @@ function SubmitTicket() {
             value={ticket.TicketProject}
             onChange={handleChange}
           >
-            <option>select Projcet</option>
+            <option>select Project</option>
             {projects.map((project) => {
-              return (
-                <option key={project.ProjectId} value={project.ProjectId}>
-                  {project.ProjectName}
-                </option>
-              );
+              if (project.ProjectStatus === "IP") {
+                return (
+                  <option key={project.ProjectId} value={project.ProjectId}>
+                    {project.ProjectName}
+                  </option>
+                );
+              } else {
+                return null;
+              }
             })}
           </select>
         </label>

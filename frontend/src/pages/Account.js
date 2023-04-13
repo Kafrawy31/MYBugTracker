@@ -11,7 +11,7 @@ function Account() {
     <div>
       <Header />
       {devUser.UserRole}
-
+      {devUser.UserPoints}
       <br />
       {user.username}
       <TicketTable userRole={devUser.userRole} tickets={userTickets} />
