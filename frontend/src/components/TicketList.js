@@ -11,7 +11,7 @@ export default function TicketList({ userRoles, thisUser }) {
   const [isLoading, setIsLoading] = useState(false);
 
   return (
-    <div>
+    <div className="tTable">
       <input
         type="text"
         onChange={(e) => handleSearch(e.target.value)}

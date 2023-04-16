@@ -16,11 +16,36 @@ function Leaderboard() {
     fetchMonthlyPoints();
   }, []);
 
-  let monthly = monthlyPoints.map((x) => x.MonthlyPoints);
+  const sortedMonthlyPoints = monthlyPoints
+    .sort((a, b) => b.MonthlyPoints - a.MonthlyPoints)
+    .slice(0, 5);
 
+  let rank = 1;
   return (
-    <div>
-      <h1>leaderboard</h1>
+    <div className="LBcontainer">
+      <div className="leaderboardContainer">
+        <h6>Top Developers this Month</h6>
+        <table className="Leaderboard">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>User</th>
+              <th>Points</th>
+            </tr>
+          </thead>
+          <tbody>
+            {sortedMonthlyPoints.map((developer) => {
+              return (
+                <tr key={developer.UserId} className="devUserLeader">
+                  <td>{rank++}</td>
+                  <td>{developer.devUserName}</td>
+                  <td>{developer.MonthlyPoints}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

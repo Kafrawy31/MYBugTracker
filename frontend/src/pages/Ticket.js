@@ -2,30 +2,34 @@ import React, { useContext, useState, useEffect } from "react";
 import ProjectContext from "../context/ProjectContext.js";
 import Header from "../components/Header.js";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Ticket() {
-  let { ticket } = useContext(ProjectContext);
+  let { editTicket } = useContext(ProjectContext);
   const [projects, setProjects] = useState([]);
   const [users, setUsers] = useState([]);
+  const navigate = useNavigate();
   const [ticketSpread, setTicketSpread] = useState({
-    TicketProject: ticket.TicketProject,
-    TicketAssignedTo: ticket.TicketAssignedTo,
-    TicketDescription: ticket.TicketDescription,
-    TicketStatus: ticket.TicketStatus,
-    TicketPriority: ticket.TicketPriority,
-    TicketPoints: ticket.TicketPoints,
+    TicketProject: editTicket.TicketProject,
+    TicketAssignedTo: editTicket.TicketAssignedTo,
+    TicketDescription: editTicket.TicketDescription,
+    TicketStatus: editTicket.TicketStatus,
+    TicketPriority: editTicket.TicketPriority,
+    TicketPoints: editTicket.TicketPoints,
   });
 
   useEffect(() => {
     setTicketSpread({
-      TicketProject: ticket.TicketProject,
-      TicketAssignedTo: ticket.TicketAssignedTo,
-      TicketDescription: ticket.TicketDescription,
-      TicketStatus: ticket.TicketStatus,
-      TicketPriority: ticket.TicketPriority,
-      TicketPoints: ticket.TicketPoints,
+      TicketProject: editTicket.TicketProject,
+      TicketAssignedTo: editTicket.TicketAssignedTo,
+      TicketDescription: editTicket.TicketDescription,
+      TicketStatus: editTicket.TicketStatus,
+      TicketPriority: editTicket.TicketPriority,
+      TicketPoints: editTicket.TicketPoints,
+      TicketObserved: editTicket.TicketObserved,
+      TicketExpected: editTicket.TicketExpected,
     });
-  }, [ticket]);
+  }, [editTicket]);
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -42,7 +46,6 @@ function Ticket() {
       const response = await axios("http://127.0.0.1:8000/api/user-list/");
       if (response.status === 200) {
         setUsers(response.data.results);
-        console.log(response.data.results);
       }
     };
     fetchUsers();
@@ -54,15 +57,22 @@ function Ticket() {
       [event.target.name]: event.target.value,
     });
   };
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-
-    axios
-      .patch(
-        `http://127.0.0.1:8000/api/ticket-update/${ticket.TicketId}`,
-        ticketSpread
-      )
-      .then(console.log(ticketSpread));
+    const requestOptions = {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(ticketSpread),
+    };
+    const response = await fetch(
+      `http://127.0.0.1:8000/api/ticket-update/${editTicket.TicketId}`,
+      requestOptions
+    );
+    console.log(response);
+    if (response.status === 200) {
+      navigate("/homepage");
+      window.location.reload();
+    }
   };
 
   return (
@@ -110,6 +120,36 @@ function Ticket() {
             name="TicketDescription"
             value={ticketSpread.TicketDescription}
             onChange={handleChange}
+          />
+        </label>
+        <br />
+        <label>
+          Observed:
+          <textarea
+            name="TicketObserved"
+            value={ticketSpread.TicketObserved}
+            onChange={handleChange}
+          />
+        </label>
+        <br />
+        <label>
+          Expected:
+          <textarea
+            name="TicketExpected"
+            value={ticketSpread.TicketExpected}
+            onChange={handleChange}
+          />
+        </label>
+        <br />
+        <label>
+          Points (1-10):
+          <input
+            type="number"
+            name="TicketPoints"
+            value={ticketSpread.TicketPoints}
+            onChange={handleChange}
+            min="1"
+            max="10"
           />
         </label>
         <br />

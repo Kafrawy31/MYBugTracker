@@ -1,22 +1,30 @@
 from rest_framework import serializers
 from .models import *
 from django.contrib.auth.models import User
+from rest_framework.validators import UniqueValidator
 
+class UserSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(
+            required=True,
+            validators=[UniqueValidator(queryset=User.objects.all())]
+            )
+    username = serializers.CharField(
+            validators=[UniqueValidator(queryset=User.objects.all())]
+            )
+    password = serializers.CharField(min_length=0)
 
+    def create(self, validated_data):
+        user = User.objects.create_user(validated_data['username'], validated_data['email'],
+             validated_data['password'])
+        return user
 
-
-
-# class TicketSerializerProject(serializers.ModelSerializer):
-#     class meta:
-#         model = Project
-#         fields = ['ProjectName']
-
-# class TicketSerializerUser(serializers.ModelSerializer):
-#     class meta:
-#         model = User
-#         fields = ['username']
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'email', 'password')
         
         
+        
+
 
 class TicketSerializer(serializers.ModelSerializer):
     TicketProject = serializers.StringRelatedField()
@@ -32,20 +40,14 @@ class TicketSerializerPost(serializers.ModelSerializer):
         model = Ticket
         fields = '__all__'        
         
-        
-        
+              
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields = '__all__'
         
         
-        
-
-        
-        
 class DevUserSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = DevUser
         fields = '__all__'

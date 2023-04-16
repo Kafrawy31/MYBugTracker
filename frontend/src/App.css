@@ -24,3 +24,93 @@
 .navbar {
   padding-right: 100px;
 }
+
+.wholeTableContainer {
+  width: 70%;
+}
+
+.ticketTableContainer {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.nextButton {
+  width: 10%;
+}
+.backButton {
+  width: 10%;
+}
+.Pages {
+  display: flex;
+  justify-content: center;
+}
+
+.TicketTable th {
+  background-color: #8aaae5;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.TicketTable td {
+  background-color: white;
+  white-space: nowrap;
+}
+
+.leaderBoardcontainer,
+h6 {
+  color: #8aaae5;
+}
+
+.leaderboardContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.LBcontainer {
+  display: inline-block;
+  border: 0;
+  margin: 0;
+}
+
+.Leaderboard,
+th,
+td {
+  background-color: aqua;
+  border: 1px solid;
+  margin: 2px;
+}
+.TicketInfo {
+  border: 5px solid;
+  margin: auto;
+  width: 50%;
+}
+
+.TicketInfo h1 {
+  text-align: center;
+  padding-bottom: 20px;
+  background-color: antiquewhite;
+}
+
+.span2 {
+  padding-left: 50px;
+  display: inline-block;
+  padding-top: 2%;
+  width: 500px;
+}
+
+.span1 {
+  display: inline-block;
+  width: 150px;
+  padding-top: 2%;
+  text-align: left;
+  font-weight: bold;
+}
+
+.TicketButton {
+  width: 100%;
+}
+
+.registerbuttons {
+  display: flex;
+}

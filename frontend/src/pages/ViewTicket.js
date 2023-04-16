@@ -8,37 +8,77 @@ import { Button } from "react-bootstrap/";
 function ViewTicket() {
   let { user, getUser, devUser } = useContext(AuthContext);
 
-  let { ticket, claimTicket } = useContext(ProjectContext);
-  useEffect(() => {
-    getUser();
-  }, []);
+  let { ticket, claimTicket, closeTicket } = useContext(ProjectContext);
 
   return (
     <div>
       <Header />
-      <div>
+      <div className="TicketInfo">
         <h1>Ticket {ticket.TicketId}</h1>
-        <h2>{user.user_id}</h2>
-        <div>Ticket ID: {ticket.TicketId}</div>
-        <div>Ticket Description: {ticket.TicketDescription}</div>
-        <div>Observed Behavior: {ticket.TicketObserved}</div>
-        <div>Expected Behavior: {ticket.TicketExpected}</div>
-        <div>Ticket Status: {ticket.TicketStatus}</div>
-        <div>Ticket Priority: {ticket.TicketPriority}</div>
-        <div>Ticket Points: {ticket.TicketPoints}</div>
-        <div>Time Opened: {ticket.TicketDateOpened}</div>
-        <div>Time Closed: {ticket.TicketDateClosed}</div>
-        <div>Assigned to: {ticket.TicketTicketAssignedTo}</div>
-        <div>Submitted By: {ticket.TicketSubmittedBy}</div>
-        <Button
-          variant="info"
-          onClick={() => claimTicket(ticket.TicketId, user.user_id)}
-          disabled={ticket.TicketAssignedTo !== null}
-        >
-          {ticket.TicketStatus === "OP" && ticket.TicketAssignedTo === null
-            ? "Claim Ticket"
-            : "Ticket Assigned"}
-        </Button>
+        <span className="span1">Ticket Description:</span>
+        <span className="span2">{ticket.TicketDescription}</span>
+        <br />
+        <span className="span1">Observed Behavior:</span>
+        <span className="span2">{ticket.TicketObserved}</span>
+        <br />
+        <span className="span1">Expected Behavior:</span>
+        <span className="span2">{ticket.TicketExpected}</span>
+        <br />
+        <span className="span1">Ticket Status:</span>
+        <span className="span2">{ticket.TicketStatus}</span>
+        <br />
+        <span className="span1">Ticket Priority:</span>
+        <span className="span2">{ticket.TicketPriority}</span>
+        <br />
+        <span className="span1">Ticket Points:</span>
+        <span className="span2">{ticket.TicketPoints}</span>
+        <br />
+        <span className="span1">Time Opened:</span>
+        <span className="span2">{ticket.TicketDateOpened}</span>
+        <br />
+        <span className="span1">Time Closed:</span>
+        <span className="span2">{ticket.TicketDateClosed}</span>
+        <br />
+        <span className="span1">Assigned to:</span>
+        <span className="span2">{ticket.TicketAssignedTo}</span>
+        <br />
+        <span className="span1">Submitted By:</span>
+        <span className="span2">{ticket.TicketSubmittedBy}</span>
+
+        {ticket.TicketAssignedTo === user.username &&
+        ticket.TicketStatus === "PE" ? (
+          <Button
+            className="TicketButton"
+            variant="info"
+            onClick={() =>
+              closeTicket(
+                ticket.TicketId,
+                user.user_id,
+                ticket.TicketPoints,
+                devUser.UserPoints,
+                devUser.MonthlyPoints
+              )
+            }
+          >
+            Close Ticket
+          </Button>
+        ) : ticket.TicketStatus === "PE" ? (
+          <Button className="TicketButton" disabled>
+            Ticket Assigned
+          </Button>
+        ) : ticket.TicketStatus === "CL" ? (
+          <Button className="TicketButton" variant="danger" disabled>
+            Ticket Closed
+          </Button>
+        ) : ticket.TicketStatus === "OP" ? (
+          <Button
+            className="TicketButton"
+            variant="success"
+            onClick={() => claimTicket(ticket.TicketId, user.user_id)}
+          >
+            Claim Ticket
+          </Button>
+        ) : null}
       </div>
     </div>
   );

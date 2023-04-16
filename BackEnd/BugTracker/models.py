@@ -23,9 +23,10 @@ class DevUser (models.Model):
         Senior = 'Senior', "SEN"
         Admin = 'Admin', "ADM"
     UserId = models.AutoField(primary_key=True)
-    UserPoints = models.IntegerField(default=0, editable=False)
-    MonthlyPoints = models.IntegerField(default=0, editable=False)
-    last_reset = models.DateTimeField(null=True)
+    UserPoints = models.IntegerField(default=0)
+    devUserName = models.CharField(max_length=20, blank=True, null=True, default=UserRoles.Developer)
+    MonthlyPoints = models.IntegerField(default=0)
+    last_reset = models.DateTimeField(null=True,blank=True)
     UserRole = models.TextField(max_length=12, choices=UserRoles.choices, default="DEV")
     UserProject = models.ManyToManyField(Project, blank=True)
     user = models.ForeignKey(User ,null = False, on_delete=models.CASCADE)
@@ -38,9 +39,16 @@ class DevUser (models.Model):
             self.save()
 
     
+    def save(self, *args, **kwargs):
+        if not self.devUserName:
+            self.devUserName = self.user.username
+        super().save(*args, **kwargs)
+
+    
     def __str__(self):
         return str(self.user)
-
+    
+    
 class Ticket(models.Model): 
     class TPriority(models.TextChoices):
         VHigh = 'VH', "Very Important"

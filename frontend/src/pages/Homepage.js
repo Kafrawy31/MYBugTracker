@@ -11,14 +11,15 @@ function Homepage() {
   useEffect(() => {
     getUser();
   }, []);
-
   let userRole = devUser.UserRole;
   return (
     <div>
       <Header />
-      <Leaderboard />
       {user && <p> You are logged in as {userRole} </p>}
-      <TicketList userRoles={userRole} thisUser={devUser} />
+      <span className="homePage">
+        <TicketList userRoles={userRole} thisUser={devUser} />
+        <Leaderboard />
+      </span>
       <ProjectList userRoles={userRole} />
     </div>
   );

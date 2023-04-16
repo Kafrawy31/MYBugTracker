@@ -9,6 +9,8 @@ from rest_framework import generics,filters
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
+from rest_framework.views import APIView
+from rest_framework import status
 
 
 
@@ -20,9 +22,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def get_token(cls, user):
         token = super().get_token(user)
 
-        # Add custom claims
         token['username'] = user.username
-        # ...
 
         return token
 class MyTokenObtainPairView(TokenObtainPairView):
@@ -52,6 +52,13 @@ def apiOverview(request):
 
 
 
+class UserCreate(APIView):
+    def post(self, request):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 class ticketList(generics.ListAPIView):
     queryset = Ticket.objects.all()
     serializer_class = TicketSerializer
@@ -75,10 +82,11 @@ def ticketDetails(request,pk):
     serializer = TicketSerializer(Tickets, many=False)
     return Response(serializer.data)
 
-
-
-# class userList(generics.ListAPIView):
-#     queryset
+@api_view(['GET'])
+def ticketDetailsEdit(request,pk):
+    Tickets = Ticket.objects.get(TicketId=pk)
+    serializer = TicketSerializerPost(Tickets, many=False)
+    return Response(serializer.data)
     
     
 
@@ -91,10 +99,29 @@ def ticketCreate(request):
     
     return Response(serializer.data)
 
+@api_view(['POST'])
+def devUserCreate(request):
+    serializer = DevUserSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    else:
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    
 @api_view(['PATCH'])
 def ticketUpdate(request,pk):
     ticket = Ticket.objects.get(TicketId=pk)
     serializer = TicketSerializerPost(instance=ticket, data=request.data, partial=True)
+    if serializer.is_valid():
+        serializer.save()
+    
+    return Response(serializer.data)
+
+@api_view(['PATCH'])
+def devUserUpdate(request,pk):
+    devuser = DevUser.objects.get(user = pk)
+    serializer = DevUserSerializer(instance=devuser, data=request.data, partial=True)
     if serializer.is_valid():
         serializer.save()
     
@@ -140,14 +167,13 @@ def projectCreate(request):
 @api_view(['POST'])
 def projectUpdate(request,pk):
     project = Project.objects.get(ProjectId=pk)
-    serializer = TicketSerializer(instance=project, data=request.data)
+    serializer = ProjectSerializer(instance=project, data=request.data)
     if serializer.is_valid():
         serializer.save()
     
     return Response(serializer.data)
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
 def DevUserDetails(request,pk):
     devUser = DevUser.objects.get(user=pk)
     serializer = DevUserSerializer(devUser, many = False)

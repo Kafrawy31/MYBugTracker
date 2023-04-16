@@ -35,12 +35,9 @@ function App() {
                 path="homepage/project/:ProjectId"
                 element={<Project />}
               ></Route>
+              <Route path="/ticket/:TicketId" element={<Ticket />}></Route>
               <Route
-                path="homepage/ticket/:TicketId"
-                element={<Ticket />}
-              ></Route>
-              <Route
-                path="homepage/viewticket/:TicketId"
+                path="/viewticket/:TicketId"
                 element={<ViewTicket />}
               ></Route>
               <Route

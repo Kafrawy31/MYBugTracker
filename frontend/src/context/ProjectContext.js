@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
+import moment from "moment";
 
 const ProjectContext = createContext();
 
@@ -12,6 +13,8 @@ export const ProjectContextProvider = ({ children }) => {
   const [projectId, setProjectId] = useState(null);
   const [tickets, setTickets] = useState([]);
   const [ticket, setTicket] = useState({});
+  const [editTicket, setEditTicket] = useState({});
+  const [editTicketId, setEditTicketId] = useState(null);
   const [allTickets, setAllTickets] = useState([]);
   const [next, setNext] = useState(null);
   const [prev, setPrev] = useState(null);
@@ -37,7 +40,6 @@ export const ProjectContextProvider = ({ children }) => {
         setProject(data);
         handleFetchTickets(data.ProjectName);
       } else {
-        navigate("/homepage");
       }
     };
 
@@ -53,7 +55,6 @@ export const ProjectContextProvider = ({ children }) => {
       if (response.status === 200) {
         setTickets(response.data.results);
       } else {
-        navigate("/homepage");
       }
     };
 
@@ -82,7 +83,6 @@ export const ProjectContextProvider = ({ children }) => {
           `http://127.0.0.1:8000/api/assigned-tickets/${curr_id}`
         );
         setUserTickets(response.data);
-        console.log(userTickets);
       } catch (err) {}
     };
 
@@ -121,15 +121,124 @@ export const ProjectContextProvider = ({ children }) => {
         const data = await response.json();
         setTicket(data);
       } else {
-        navigate("/homepage");
       }
     };
 
     fetchTicket();
   }, [ticketId]);
 
+  useEffect(() => {
+    const fetchTicketEdit = async () => {
+      const response = await fetch(
+        `http://localhost:8000/api/ticket-details-edit/${editTicketId}`,
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+
+      if (response.status === 200) {
+        const data = await response.json();
+        setEditTicket(data);
+      } else {
+      }
+    };
+
+    fetchTicketEdit();
+  }, [editTicketId]);
+
+  const register = async (username, email, password) => {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: `${username}`,
+        email: `${email}`,
+        password: `${password}`,
+      }),
+    };
+    const response = await fetch(
+      "http://localhost:8000/api/user-create/",
+      requestOptions
+    );
+
+    const data = await response.text();
+    const result = JSON.parse(data);
+    if (response.status === 201) {
+      const devId = result.id;
+      const devRequestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user: devId,
+        }),
+      };
+
+      const response2 = await fetch(
+        "http://localhost:8000/api/devuser-create/",
+        devRequestOptions
+      );
+    }
+  };
+
+  const closeTicket = async (ticketId, userId, Tpoints, UPoints, MUPoints) => {
+    const newTotal = Tpoints + UPoints;
+    const monthlyNewTotal = Tpoints + MUPoints;
+
+    const requestOptionsTicket = {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ TicketStatus: "CL", TicketDateClosed: moment() }),
+    };
+
+    const requestOptionsUser = {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        UserPoints: newTotal,
+        MonthlyPoints: monthlyNewTotal,
+      }),
+    };
+
+    fetch(
+      `http://127.0.0.1:8000/api/ticket-update/${ticketId}`,
+      requestOptionsTicket
+    )
+      .then((response) => {})
+      .catch((error) => alert(error.message));
+
+    fetch(
+      `http://127.0.0.1:8000/api/devuser-update/${userId}`,
+      requestOptionsUser
+    )
+      .then((response) => {
+        navigate("/homepage");
+        window.location.reload();
+      })
+      .catch((error) => alert(error.message));
+  };
+
+  const claimTicket = async (ticketId, userId) => {
+    const requestOptions = {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ TicketAssignedTo: userId, TicketStatus: "PE" }),
+    };
+
+    fetch(`http://127.0.0.1:8000/api/ticket-update/${ticketId}`, requestOptions)
+      .then((response) => {
+        navigate("/homepage");
+        window.location.reload();
+      })
+      .catch((error) => alert(error.message));
+  };
+
   const handleFetchTicket = (ticketId) => {
     setTicketId(ticketId);
+  };
+
+  const handleFetchTicketEdit = (editTicketId) => {
+    setEditTicketId(editTicketId);
   };
 
   const handleCurrId = (curr_id) => {
@@ -148,29 +257,14 @@ export const ProjectContextProvider = ({ children }) => {
     setSearch(search);
   };
 
-  const claimTicket = async (ticketId, userId) => {
-    const requestOptions = {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ TicketAssignedTo: userId, TicketStatus: "PE" }),
-    };
-
-    fetch(`http://127.0.0.1:8000/api/ticket-update/${ticketId}`, requestOptions)
-      .then((response) => {
-        console.log(response.status);
-        console.log(response);
-        navigate("/homepage");
-        window.location.reload();
-      })
-      .catch((error) => alert(error.message));
-  };
-
   const projectContextData = {
     handleFetchProject,
     project,
     handleFetchTickets,
     tickets,
     handleFetchTicket,
+    handleFetchTicketEdit,
+    editTicket,
     ticket,
     allTickets,
     pageNext,
@@ -182,6 +276,8 @@ export const ProjectContextProvider = ({ children }) => {
     claimTicket,
     handleCurrId,
     userTickets,
+    closeTicket,
+    register,
   };
 
   return (
