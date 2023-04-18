@@ -28,7 +28,7 @@ class DevUser (models.Model):
     MonthlyPoints = models.IntegerField(default=0)
     last_reset = models.DateTimeField(null=True,blank=True)
     UserRole = models.TextField(max_length=12, choices=UserRoles.choices, default=UserRoles.Developer)
-    UserProject = models.ManyToManyField(Project, blank=True)
+    UserProject = models.ManyToManyField(Project, blank=True, related_name='userprojects')
     user = models.ForeignKey(User ,null = False, on_delete=models.CASCADE)
 
     def reset_points_monthly(self):

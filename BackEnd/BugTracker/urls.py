@@ -27,5 +27,6 @@ urlpatterns = [
     path('devuser-list/', views.devUserList, name='devuser-list'),
     path('assigned-tickets/<str:pk>/', views.ticketByUser, name = 'assigned-tickets'),
     path('project-tickets/<str:pk>/', views.ticketByProject, name = 'ticket-project'),
+    path('project-members/<str:pk>/', views.DevUsersAssignedToProject, name = 'project-members'),
     
 ]

@@ -200,5 +200,12 @@ def ticketByUser(request,pk):
     Tickets = Ticket.objects.filter(TicketAssignedTo=pk)
     serializer = TicketSerializer(Tickets, many=True)
     return Response(serializer.data)
+
+@api_view(['GET'])
+def DevUsersAssignedToProject(request,pk):
+    project = Project.objects.get(ProjectId=pk)
+    dev_users = project.userprojects.all()
+    serializer = DevUserSerializer(dev_users, many=True)
+    return Response(serializer.data)
     
     
