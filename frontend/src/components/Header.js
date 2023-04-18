@@ -7,7 +7,7 @@ import AuthContext from "../context/AuthContext.js";
 import { Link } from "react-router-dom";
 import ProjectContext from "../context/ProjectContext.js";
 
-function Header() {
+function Header({ Role }) {
   let { user, userLogout } = useContext(AuthContext);
   let { handleCurrId } = useContext(ProjectContext);
   return (
@@ -39,13 +39,17 @@ function Header() {
                 >
                   account
                 </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">
-                  Something
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">
-                  Separated link
-                </NavDropdown.Item>
+                {(Role === "Admin" || Role === "Senior") && (
+                  <>
+                    <NavDropdown.Item as={Link} to="/CreateProject">
+                      Create Project
+                    </NavDropdown.Item>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item href="#action/3.4">
+                      Separated link
+                    </NavDropdown.Item>
+                  </>
+                )}
               </NavDropdown>
             ) : null}
           </Nav>

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useCallback } from "react";
 import { Table } from "react-bootstrap";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import ProjectContext from "../context/ProjectContext.js";
@@ -43,7 +43,14 @@ export default function ProjectTable({ projects, search, userRole }) {
                   </td>
                 ) : (
                   <td>
-                    <Button variant="info">View</Button>
+                    <Link to={`project/${project.ProjectId}`}>
+                      <Button
+                        onClick={() => handleFetchProject(project.ProjectId)}
+                        variant="info"
+                      >
+                        View
+                      </Button>
+                    </Link>
                   </td>
                 )}
               </tr>

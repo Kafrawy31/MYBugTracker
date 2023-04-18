@@ -38,7 +38,7 @@ export const ProjectContextProvider = ({ children }) => {
       if (response.status === 200) {
         const data = await response.json();
         setProject(data);
-        handleFetchTickets(data.ProjectName);
+        handleFetchTickets(data.ProjectId);
       } else {
       }
     };
@@ -49,13 +49,9 @@ export const ProjectContextProvider = ({ children }) => {
   useEffect(() => {
     const fetchTickets = async () => {
       const response = await axios(
-        `http://127.0.0.1:8000/api/ticket-list/?limit=4&search=${ticketProject}`
+        `http://127.0.0.1:8000/api/project-tickets/${projectId}/`
       );
-
-      if (response.status === 200) {
-        setTickets(response.data.results);
-      } else {
-      }
+      setTickets(response.data);
     };
 
     fetchTickets();
@@ -181,6 +177,41 @@ export const ProjectContextProvider = ({ children }) => {
     }
   };
 
+  const createProject = async (
+    projectName,
+    projectDescription,
+    projectStatus
+  ) => {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ProjectName: projectName,
+        ProjectDescription: projectDescription,
+        ProjectStatus: projectStatus,
+      }),
+    };
+    const response = await fetch(
+      "http://localhost:8000/api/project-create/",
+      requestOptions
+    );
+  };
+
+  const editProject = async (projectDescription, projectStatus) => {
+    const requestOptions = {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ProjectDescription: projectDescription,
+        ProjectStatus: projectStatus,
+      }),
+    };
+    const response = await fetch(
+      `http://localhost:8000/api/project-update/${projectId}`,
+      requestOptions
+    );
+  };
+
   const closeTicket = async (ticketId, userId, Tpoints, UPoints, MUPoints) => {
     const newTotal = Tpoints + UPoints;
     const monthlyNewTotal = Tpoints + MUPoints;
@@ -278,6 +309,8 @@ export const ProjectContextProvider = ({ children }) => {
     userTickets,
     closeTicket,
     register,
+    createProject,
+    editProject,
   };
 
   return (

@@ -164,10 +164,10 @@ def projectCreate(request):
     return Response(serializer.data)
 
 
-@api_view(['POST'])
+@api_view(['PATCH'])
 def projectUpdate(request,pk):
     project = Project.objects.get(ProjectId=pk)
-    serializer = ProjectSerializer(instance=project, data=request.data)
+    serializer = ProjectSerializer(instance=project, data=request.data, partial= True)
     if serializer.is_valid():
         serializer.save()
     

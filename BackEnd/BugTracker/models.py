@@ -24,10 +24,10 @@ class DevUser (models.Model):
         Admin = 'Admin', "ADM"
     UserId = models.AutoField(primary_key=True)
     UserPoints = models.IntegerField(default=0)
-    devUserName = models.CharField(max_length=20, blank=True, null=True, default=UserRoles.Developer)
+    devUserName = models.CharField(max_length=20, blank=True, null=True, default='')
     MonthlyPoints = models.IntegerField(default=0)
     last_reset = models.DateTimeField(null=True,blank=True)
-    UserRole = models.TextField(max_length=12, choices=UserRoles.choices, default="DEV")
+    UserRole = models.TextField(max_length=12, choices=UserRoles.choices, default=UserRoles.Developer)
     UserProject = models.ManyToManyField(Project, blank=True)
     user = models.ForeignKey(User ,null = False, on_delete=models.CASCADE)
 

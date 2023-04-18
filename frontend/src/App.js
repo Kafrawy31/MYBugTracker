@@ -13,6 +13,7 @@ import Private from "./utils/Private.js";
 import { AuthProvider } from "./context/AuthContext.js";
 import { ProjectContextProvider } from "./context/ProjectContext.js";
 import Project from "./pages/Project.js";
+import CreateProject from "./pages/CreateProject.js";
 
 function App() {
   return (
@@ -45,6 +46,14 @@ function App() {
                 element={
                   <Private>
                     <SubmitTicket />
+                  </Private>
+                }
+              ></Route>
+              <Route
+                path="/CreateProject"
+                element={
+                  <Private>
+                    <CreateProject />
                   </Private>
                 }
               ></Route>

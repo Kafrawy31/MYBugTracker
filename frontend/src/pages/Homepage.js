@@ -14,7 +14,7 @@ function Homepage() {
   let userRole = devUser.UserRole;
   return (
     <div>
-      <Header />
+      <Header Role={userRole} />
       {user && <p> You are logged in as {userRole} </p>}
       <span className="homePage">
         <TicketList userRoles={userRole} thisUser={devUser} />
