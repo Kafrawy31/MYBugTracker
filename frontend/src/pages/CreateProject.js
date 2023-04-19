@@ -33,51 +33,53 @@ function CreateProject() {
   };
 
   return (
-    <div className="Wrap--Register">
+    <div>
       <Header />
-      <form onSubmit={handleSubmit}>
-        <div className="Register--Input">
-          <label htmlFor="formGroupExampleInput">Project name</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Project Name"
-            value={projectName}
-            onChange={handleProjectNameChange}
-          />
-        </div>
-        <div className="Register--Input">
-          <label htmlFor="formGroupExampleInput2">Project Description</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Project Description"
-            value={projectDescription}
-            onChange={handleProjectDescriptionChange}
-          />
-        </div>
-        <div className="Register--Input">
-          <label htmlFor="formGroupExampleInput2">Project Staus</label>
-          <select
-            name="projectStatus"
-            placeholder="status"
-            value={projectStatus}
-            onChange={handleProjectStatusChange}
-          >
-            <option value="IP">In Progress</option>
-            <option value="CU">Coming up</option>
-          </select>
-        </div>
-        <div className="CreateProject">
-          <Button
-            type="submit"
-            className="Register--Button"
-            variant="outline-success"
-          >
-            Create Project
-          </Button>
-        </div>
-      </form>
+      <div className="Wrap--Register">
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="formGroupExampleInput">Project name</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Project Name"
+              value={projectName}
+              onChange={handleProjectNameChange}
+            />
+          </div>
+          <div className="Register--Input">
+            <label htmlFor="formGroupExampleInput2">Project Description</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Project Description"
+              value={projectDescription}
+              onChange={handleProjectDescriptionChange}
+            />
+          </div>
+          <div className="Register--Input">
+            <label htmlFor="formGroupExampleInput2">Project Staus</label>
+            <select
+              name="projectStatus"
+              placeholder="status"
+              value={projectStatus}
+              onChange={handleProjectStatusChange}
+            >
+              <option value="IP">In Progress</option>
+              <option value="CU">Coming up</option>
+            </select>
+          </div>
+          <div className="CreateProject">
+            <Button
+              type="submit"
+              className="Register--Button"
+              variant="outline-success"
+            >
+              Create Project
+            </Button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

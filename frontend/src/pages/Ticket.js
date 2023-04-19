@@ -47,6 +47,7 @@ function Ticket() {
       const response = await axios("http://127.0.0.1:8000/api/user-list/");
       if (response.status === 200) {
         setUsers(response.data.results);
+        console.log(response.data.results);
       }
     };
     fetchUsers();
@@ -101,6 +102,7 @@ function Ticket() {
             Assigned User:
             <select
               name="TicketAssignedTo"
+              className="Ticket-AssignedUser"
               value={ticketSpread.TicketAssignedTo}
               onChange={handleChange}
             >

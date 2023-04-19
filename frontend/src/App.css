@@ -391,3 +391,7 @@ td {
 }
 
 /* register and login css taken from https://codepen.io/g13nn/pen/DBVpVE */
+
+.Ticket--AssignedUser {
+  overflow-y: scroll;
+}

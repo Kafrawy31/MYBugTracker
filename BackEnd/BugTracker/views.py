@@ -11,6 +11,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.views import APIView
 from rest_framework import status
+from rest_framework.pagination import PageNumberPagination
 
 
 
@@ -182,7 +183,8 @@ def DevUserDetails(request,pk):
 class UserList(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = CurrentUserSerializer
-
+    
+    
 @api_view(['GET'])
 def devUserList(request):
     devs = DevUser.objects.all()

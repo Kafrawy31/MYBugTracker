@@ -24,10 +24,6 @@ export default function TicketTable({
 
   const navigate = useNavigate();
 
-  if (tickets.length === 0) {
-    return <div>No tickets to display</div>;
-  }
-
   return (
     <>
       <Table striped bordered className="TicketTable">

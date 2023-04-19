@@ -45,10 +45,9 @@ function SubmitTicket() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(ticket),
     };
-    fetch("http://127.0.0.1:8000/api/ticket-create/", requestOptions)
-      .then((response) => console.log(response.status))
-      .then((data) => console.log(data))
-      .catch((error) => alert(error.message));
+    fetch("http://127.0.0.1:8000/api/ticket-create/", requestOptions).then(
+      (response) => console.log(response.status)
+    );
     navigate("/homepage");
     window.location.reload();
   };
@@ -145,7 +144,7 @@ function SubmitTicket() {
             className="Edit--Ticket--Button"
             variant="outline-success"
           >
-            Edit Ticket
+            Submit Ticket
           </Button>
         </form>
       </div>

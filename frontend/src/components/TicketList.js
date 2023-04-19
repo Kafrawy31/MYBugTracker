@@ -10,10 +10,6 @@ export default function TicketList({ userRoles, thisUser, givenTickets }) {
   let { allTickets, handleSearch, search } = useContext(ProjectContext);
   const [isLoading, setIsLoading] = useState(false);
 
-  if (givenTickets.length === 0) {
-    return <div>No tickets to display</div>;
-  }
-
   return (
     <div className="Container--TicketList">
       <input
@@ -22,13 +18,17 @@ export default function TicketList({ userRoles, thisUser, givenTickets }) {
         onChange={(e) => handleSearch(e.target.value)}
         placeholder="Search for tickets..."
       />
-      <TicketTable
-        userRole={userRoles}
-        tickets={givenTickets}
-        Loading={false}
-        search={search}
-        user={thisUser}
-      />
+      {givenTickets.length === 0 ? (
+        <p>no tickets to display</p>
+      ) : (
+        <TicketTable
+          userRole={userRoles}
+          tickets={givenTickets}
+          Loading={false}
+          search={search}
+          user={thisUser}
+        />
+      )}
     </div>
   );
 }
