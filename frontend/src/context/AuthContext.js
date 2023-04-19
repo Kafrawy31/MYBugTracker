@@ -118,3 +118,6 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider value={contextData}>{children}</AuthContext.Provider>
   );
 };
+
+/*This video https://www.youtube.com/watch?v=xjMP0hspNLE
+ was used for reference to implement this*/
