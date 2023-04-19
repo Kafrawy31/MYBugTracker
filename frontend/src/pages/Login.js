@@ -5,13 +5,13 @@ import AuthContext from "../context/AuthContext.js";
 export default function Login() {
   let { userLogin, user } = useContext(AuthContext);
   return (
-    <div>
+    <div className="Reg--Page">
       <Header />
       <div className="Wrap--Register--Page">
-        <h2 className="SignUp--Title">Login</h2>
+        <h2 className="Register--Title">Login</h2>
         <div className="Wrap--Register">
           <form onSubmit={userLogin}>
-            <div className="Register--Input">
+            <div className="username">
               <label htmlFor="formGroupExampleInput">Username</label>
               <input
                 type="text"
@@ -20,7 +20,7 @@ export default function Login() {
                 name="username"
               />
             </div>
-            <div className="Register--Input">
+            <div className="password">
               <label htmlFor="formGroupExampleInput2">Password</label>
               <input
                 type="password"
@@ -30,7 +30,7 @@ export default function Login() {
               />
             </div>
             <div>
-              <input type="submit" />
+              <input className="Login" value="Login" type="submit" />
             </div>
           </form>
         </div>

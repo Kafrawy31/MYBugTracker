@@ -11,41 +11,64 @@ function ViewTicket() {
   let { ticket, claimTicket, closeTicket } = useContext(ProjectContext);
 
   return (
-    <div>
+    <div className="Ticket--Container">
       <Header />
-      <div className="TicketInfo">
-        <h1>Ticket {ticket.TicketId}</h1>
-        <span className="span1">Ticket Description:</span>
-        <span className="span2">{ticket.TicketDescription}</span>
-        <br />
-        <span className="span1">Observed Behavior:</span>
-        <span className="span2">{ticket.TicketObserved}</span>
-        <br />
-        <span className="span1">Expected Behavior:</span>
-        <span className="span2">{ticket.TicketExpected}</span>
-        <br />
-        <span className="span1">Ticket Status:</span>
-        <span className="span2">{ticket.TicketStatus}</span>
-        <br />
-        <span className="span1">Ticket Priority:</span>
-        <span className="span2">{ticket.TicketPriority}</span>
-        <br />
-        <span className="span1">Ticket Points:</span>
-        <span className="span2">{ticket.TicketPoints}</span>
-        <br />
-        <span className="span1">Time Opened:</span>
-        <span className="span2">{ticket.TicketDateOpened}</span>
-        <br />
-        <span className="span1">Time Closed:</span>
-        <span className="span2">{ticket.TicketDateClosed}</span>
-        <br />
-        <span className="span1">Assigned to:</span>
-        <span className="span2">{ticket.TicketAssignedTo}</span>
-        <br />
-        <span className="span1">Submitted By:</span>
-        <span className="span2">{ticket.TicketSubmittedBy}</span>
 
-        {ticket.TicketAssignedTo === user.username &&
+      <div className="TicketInfo">
+        <div className="Title--Container">
+          <h1 className="Ticket--Title">Ticket {ticket.TicketId}</h1>
+        </div>
+
+        <div className="FirstSpan">
+          <span className="span1">Ticket Description:</span>
+          <span className="span2">{ticket.TicketDescription}</span>
+        </div>
+
+        <span>
+          <span className="span1">Observed Behavior:</span>
+          <span className="span2">{ticket.TicketObserved}</span>
+        </span>
+
+        <span>
+          <span className="span1">Expected Behavior:</span>
+          <span className="span2">{ticket.TicketExpected}</span>
+        </span>
+        <span>
+          <span className="span1">Ticket Status:</span>
+          <span className="span2">{ticket.TicketStatus}</span>
+        </span>
+
+        <span>
+          <span className="span1">Ticket Priority:</span>
+          <span className="span2">{ticket.TicketPriority}</span>
+        </span>
+
+        <span>
+          <span className="span1">Ticket Points:</span>
+          <span className="span2">{ticket.TicketPoints}</span>
+        </span>
+
+        <span>
+          <span className="span1">Time Opened:</span>
+          <span className="span2">{ticket.TicketDateOpened}</span>
+          <span></span>
+        </span>
+
+        <span>
+          <span className="span1">Time Closed:</span>
+          <span className="span2">{ticket.TicketDateClosed}</span>
+        </span>
+
+        <span>
+          <span className="span1">Assigned to:</span>
+          <span className="span2">{ticket.TicketAssignedTo}</span>
+        </span>
+        <span>
+          <span className="span1">Submitted By:</span>
+          <span className="span2">{ticket.TicketSubmittedBy}</span>
+        </span>
+
+        {ticket.TicketAssignedTo === devUser.devUserName &&
         ticket.TicketStatus === "PE" ? (
           <Button
             className="TicketButton"

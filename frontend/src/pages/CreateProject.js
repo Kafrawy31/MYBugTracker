@@ -4,12 +4,14 @@ import TicketTable from "../components/TicketTable.js";
 import Header from "../components/Header.js";
 import AuthContext from "../context/AuthContext.js";
 import { Button } from "react-bootstrap/";
+import { useNavigate } from "react-router-dom";
 
 function CreateProject() {
   let { createProject } = useContext(ProjectContext);
   const [projectName, setProjectName] = useState("");
   const [projectDescription, setProjectDescription] = useState("");
   const [projectStatus, setProjectStatus] = useState("");
+  const navigate = useNavigate();
 
   const handleProjectNameChange = (event) => {
     setProjectName(event.target.value);
@@ -26,6 +28,8 @@ function CreateProject() {
   const handleSubmit = (event) => {
     event.preventDefault();
     createProject(projectName, projectDescription, projectStatus);
+    navigate("/homepage");
+    window.location.reload();
   };
 
   return (

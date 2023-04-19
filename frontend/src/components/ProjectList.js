@@ -23,11 +23,12 @@ export default function ProjectList({ userRoles }) {
   }, [projectSearch]);
 
   return (
-    <div>
+    <div className="Container--ProjectList">
       <input
+        className="Search--Project"
         type="text"
         onChange={(e) => setProjectSearch(e.target.value)}
-        placeholder="Search"
+        placeholder="Search for Project..."
       />
       <ProjectTable
         userRole={userRoles}

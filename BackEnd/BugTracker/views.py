@@ -72,7 +72,7 @@ class ticketList(generics.ListAPIView):
                      'TicketSubmittedBy__username',
                      'TicketAssignedTo__username'
                      ]
-    ordering = ['TicketDateOpened']
+    ordering = ['-TicketDateOpened']
     
 
 

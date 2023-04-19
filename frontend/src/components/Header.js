@@ -11,24 +11,26 @@ function Header({ Role }) {
   let { user, userLogout } = useContext(AuthContext);
   let { handleCurrId } = useContext(ProjectContext);
   return (
-    <Navbar bg="dark" expand="lg" variant="dark">
+    <Navbar className="Header" bg="dark" expand="lg" variant="dark">
       <Container>
         <Navbar.Brand href="#home">Bug Tracker</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Link className="nav-link" to="/homepage">
-              Home
-            </Link>
+            {user ? (
+              <Nav.Link href="/homepage">Home</Nav.Link>
+            ) : (
+              <Nav.Link href="/">Register</Nav.Link>
+            )}
             {user ? (
               <Nav.Link to="/Login" onClick={userLogout}>
                 Logout
               </Nav.Link>
             ) : (
-              <Nav.Link href="#link">Login</Nav.Link>
+              <Nav.Link href="/Login">Login</Nav.Link>
             )}
             {user ? (
-              <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+              <NavDropdown title="More" id="basic-nav-dropdown">
                 <NavDropdown.Item as={Link} to="/SubmitTicket">
                   Submit Ticket
                 </NavDropdown.Item>
@@ -37,7 +39,7 @@ function Header({ Role }) {
                   to="/account"
                   onClick={() => handleCurrId(user.user_id)}
                 >
-                  account
+                  Account
                 </NavDropdown.Item>
                 {(Role === "Admin" || Role === "Senior") && (
                   <>
@@ -45,9 +47,6 @@ function Header({ Role }) {
                       Create Project
                     </NavDropdown.Item>
                     <NavDropdown.Divider />
-                    <NavDropdown.Item href="#action/3.4">
-                      Separated link
-                    </NavDropdown.Item>
                   </>
                 )}
               </NavDropdown>

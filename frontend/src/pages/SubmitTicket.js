@@ -4,6 +4,7 @@ import axios from "axios";
 import moment from "moment";
 import AuthContext from "../context/AuthContext.js";
 import { useNavigate } from "react-router-dom";
+import { Button } from "react-bootstrap";
 
 function SubmitTicket() {
   let { user, getUser, devUser } = useContext(AuthContext);
@@ -59,84 +60,95 @@ function SubmitTicket() {
   return (
     <div>
       <Header />
-      {user && <p> You are logged in as {devUser.UserRole} </p>}
-      <h2>Submit a New Ticket</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Ticket Project:
-          <select
-            name="TicketProject"
-            value={ticket.TicketProject}
-            onChange={handleChange}
+      <div className="Edit--Ticket--Container">
+        <h2 className="Edit--Ticket--Title">Submit a New Ticket</h2>
+        <form onSubmit={handleSubmit}>
+          <label>
+            Ticket Project:
+            <select
+              name="TicketProject"
+              value={ticket.TicketProject}
+              onChange={handleChange}
+            >
+              <option>select Project</option>
+              {projects.map((project) => {
+                if (project.ProjectStatus === "IP") {
+                  return (
+                    <option key={project.ProjectId} value={project.ProjectId}>
+                      {project.ProjectName}
+                    </option>
+                  );
+                } else {
+                  return null;
+                }
+              })}
+            </select>
+          </label>
+          <br />
+          <label>
+            Code Location:
+            <input
+              type="text"
+              name="TicketCodeLocation"
+              className="Edit--Ticket--Description"
+              value={ticket.TicketCodeLocation}
+              onChange={handleChange}
+            />
+          </label>
+          <br />
+          <label>
+            Description:
+            <textarea
+              className="Edit--Ticket--Description"
+              name="TicketDescription"
+              value={ticket.TicketDescription}
+              onChange={handleChange}
+            />
+          </label>
+          <br />
+          <label>
+            Observed Behavior:
+            <textarea
+              className="Edit--Ticket--Description"
+              name="TicketObserved"
+              value={ticket.TicketObserved}
+              onChange={handleChange}
+            />
+          </label>
+          <br />
+          <label>
+            Expected Behavior:
+            <textarea
+              className="Edit--Ticket--Description"
+              name="TicketExpected"
+              value={ticket.TicketExpected}
+              onChange={handleChange}
+            />
+          </label>
+          <br />
+          <label>
+            Priority:
+            <select
+              name="TicketPriority"
+              value={ticket.TicketPriority}
+              onChange={handleChange}
+            >
+              <option value="VH">Very High</option>
+              <option value="H">High</option>
+              <option value="M">Medium</option>
+              <option value="L">Low</option>
+            </select>
+          </label>
+          <br />
+          <Button
+            type="submit"
+            className="Edit--Ticket--Button"
+            variant="outline-success"
           >
-            <option>select Project</option>
-            {projects.map((project) => {
-              if (project.ProjectStatus === "IP") {
-                return (
-                  <option key={project.ProjectId} value={project.ProjectId}>
-                    {project.ProjectName}
-                  </option>
-                );
-              } else {
-                return null;
-              }
-            })}
-          </select>
-        </label>
-        <br />
-        <label>
-          Code Location:
-          <input
-            type="text"
-            name="TicketCodeLocation"
-            value={ticket.TicketCodeLocation}
-            onChange={handleChange}
-          />
-        </label>
-        <br />
-        <label>
-          Description:
-          <textarea
-            name="TicketDescription"
-            value={ticket.TicketDescription}
-            onChange={handleChange}
-          />
-        </label>
-        <br />
-        <label>
-          Observed Behavior:
-          <textarea
-            name="TicketObserved"
-            value={ticket.TicketObserved}
-            onChange={handleChange}
-          />
-        </label>
-        <br />
-        <label>
-          Expected Behavior:
-          <textarea
-            name="TicketExpected"
-            value={ticket.TicketExpected}
-            onChange={handleChange}
-          />
-        </label>
-        <br />
-        <label>
-          Priority:
-          <select
-            name="TicketPriority"
-            value={ticket.TicketPriority}
-            onChange={handleChange}
-          >
-            <option value="VH">Very High</option>
-            <option value="H">High</option>
-            <option value="M">Medium</option>
-            <option value="L">Low</option>
-          </select>
-        </label>
-        <br />
-        <button type="submit">Submit Ticket</button>
-      </form>
+            Edit Ticket
+          </Button>
+        </form>
+      </div>
     </div>
   );
 }

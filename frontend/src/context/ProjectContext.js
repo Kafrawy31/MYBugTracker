@@ -234,34 +234,35 @@ export const ProjectContextProvider = ({ children }) => {
     fetch(
       `http://127.0.0.1:8000/api/ticket-update/${ticketId}`,
       requestOptionsTicket
-    )
-      .then((response) => {})
-      .catch((error) => alert(error.message));
+    ).then((response) => {});
 
     fetch(
       `http://127.0.0.1:8000/api/devuser-update/${userId}`,
       requestOptionsUser
-    )
-      .then((response) => {
-        navigate("/homepage");
-        window.location.reload();
-      })
-      .catch((error) => alert(error.message));
+    ).then((response) => {
+      navigate("/homepage");
+      window.location.reload();
+    });
   };
 
   const claimTicket = async (ticketId, userId) => {
     const requestOptions = {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ TicketAssignedTo: userId, TicketStatus: "PE" }),
+      body: JSON.stringify({
+        TicketAssignedTo: userId,
+        TicketStatus: "PE",
+        TicketDateAssigned: moment(),
+      }),
     };
 
-    fetch(`http://127.0.0.1:8000/api/ticket-update/${ticketId}`, requestOptions)
-      .then((response) => {
-        navigate("/homepage");
-        window.location.reload();
-      })
-      .catch((error) => alert(error.message));
+    fetch(
+      `http://127.0.0.1:8000/api/ticket-update/${ticketId}`,
+      requestOptions
+    ).then((response) => {
+      navigate("/homepage");
+      window.location.reload();
+    });
   };
 
   const handleFetchTicket = (ticketId) => {

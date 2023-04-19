@@ -6,20 +6,25 @@ import { Button } from "react-bootstrap";
 import TicketTable from "./TicketTable.js";
 import ProjectContext from "../context/ProjectContext.js";
 
-export default function TicketList({ userRoles, thisUser }) {
+export default function TicketList({ userRoles, thisUser, givenTickets }) {
   let { allTickets, handleSearch, search } = useContext(ProjectContext);
   const [isLoading, setIsLoading] = useState(false);
 
+  if (givenTickets.length === 0) {
+    return <div>No tickets to display</div>;
+  }
+
   return (
-    <div className="tTable">
+    <div className="Container--TicketList">
       <input
+        className="Search--Ticket"
         type="text"
         onChange={(e) => handleSearch(e.target.value)}
-        placeholder="Search"
+        placeholder="Search for tickets..."
       />
       <TicketTable
         userRole={userRoles}
-        tickets={allTickets}
+        tickets={givenTickets}
         Loading={false}
         search={search}
         user={thisUser}

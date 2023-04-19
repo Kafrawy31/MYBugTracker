@@ -22,30 +22,28 @@ function Leaderboard() {
 
   let rank = 1;
   return (
-    <div className="LBcontainer">
-      <div className="leaderboardContainer">
-        <h6>Top Developers this Month</h6>
-        <table className="Leaderboard">
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>User</th>
-              <th>Points</th>
-            </tr>
-          </thead>
-          <tbody>
-            {sortedMonthlyPoints.map((developer) => {
-              return (
-                <tr key={developer.UserId} className="devUserLeader">
-                  <td>{rank++}</td>
-                  <td>{developer.devUserName}</td>
-                  <td>{developer.MonthlyPoints}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+    <div className="Leaderboard--Container">
+      <h6 className="Leaderboard--Text">Top Developers this Month</h6>
+      <table className="Leaderboard">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Name</th>
+            <th>Points</th>
+          </tr>
+        </thead>
+        <tbody>
+          {sortedMonthlyPoints.map((developer) => {
+            return (
+              <tr key={developer.UserId} className="devUserLeader">
+                <td>{rank++}</td>
+                <td>{developer.devUserName}</td>
+                <td>{developer.MonthlyPoints}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     </div>
   );
 }

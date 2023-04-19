@@ -6,7 +6,7 @@ import { Button } from "react-bootstrap/";
 export default function ProjectTable({ projects, search, userRole }) {
   let { handleFetchProject } = useContext(ProjectContext);
   return (
-    <Table striped bordered>
+    <Table className="Project--Table" striped bordered>
       <thead>
         <tr>
           <th>Project ID</th>

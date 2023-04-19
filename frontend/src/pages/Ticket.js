@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import ProjectContext from "../context/ProjectContext.js";
 import Header from "../components/Header.js";
 import axios from "axios";
+import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 function Ticket() {
@@ -68,7 +69,6 @@ function Ticket() {
       `http://127.0.0.1:8000/api/ticket-update/${editTicket.TicketId}`,
       requestOptions
     );
-    console.log(response);
     if (response.status === 200) {
       navigate("/homepage");
       window.location.reload();
@@ -78,97 +78,111 @@ function Ticket() {
   return (
     <div>
       <Header />
-      <h2>Edit Ticket</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Ticket Project:
-          <select
-            name="TicketProject"
-            value={ticketSpread.TicketProject}
-            onChange={handleChange}
+      <div className="Edit--Ticket--Container">
+        <h2 className="Edit--Ticket--Title">Edit Ticket</h2>
+        <form onSubmit={handleSubmit}>
+          <label>
+            Ticket Project:
+            <select
+              name="TicketProject"
+              value={ticketSpread.TicketProject}
+              onChange={handleChange}
+            >
+              {projects.map((project) => {
+                return (
+                  <option key={project.ProjectId} value={project.ProjectId}>
+                    {project.ProjectName}
+                  </option>
+                );
+              })}
+            </select>
+          </label>
+          <label className="Edit--Ticket--AssignedUser">
+            Assigned User:
+            <select
+              name="TicketAssignedTo"
+              value={ticketSpread.TicketAssignedTo}
+              onChange={handleChange}
+            >
+              {users.map((user) => {
+                return (
+                  <option key={user.id} value={user.id}>
+                    {user.username}
+                  </option>
+                );
+              })}
+            </select>
+          </label>
+          <br />
+          <br />
+          <label>
+            Description:
+            <textarea
+              name="TicketDescription"
+              className="Edit--Ticket--Description"
+              value={ticketSpread.TicketDescription}
+              onChange={handleChange}
+            />
+          </label>
+          <br />
+          <br />
+          <label>
+            Observed:
+            <textarea
+              name="TicketObserved"
+              className="Edit--Ticket--Description"
+              value={ticketSpread.TicketObserved}
+              onChange={handleChange}
+            />
+          </label>
+          <br />
+          <br />
+          <label>
+            Expected:
+            <textarea
+              name="TicketExpected"
+              className="Edit--Ticket--Description"
+              value={ticketSpread.TicketExpected}
+              onChange={handleChange}
+            />
+          </label>
+          <br />
+          <br />
+          <label>
+            Points (1-10):
+            <input
+              type="number"
+              name="TicketPoints"
+              value={ticketSpread.TicketPoints}
+              onChange={handleChange}
+              min="1"
+              max="10"
+            />
+          </label>
+          <br />
+          <label>
+            Priority:
+            <select
+              name="TicketPriority"
+              value={ticketSpread.TicketPriority}
+              onChange={handleChange}
+            >
+              <option value="VH">Very High</option>
+              <option value="H">High</option>
+              <option value="M">Medium</option>
+              <option value="L">Low</option>
+            </select>
+          </label>
+          <br />
+          <Button
+            type="submit"
+            className="Edit--Ticket--Button"
+            variant="outline-success"
           >
-            {projects.map((project) => {
-              return (
-                <option key={project.ProjectId} value={project.ProjectId}>
-                  {project.ProjectName}
-                </option>
-              );
-            })}
-          </select>
-        </label>
-
-        <label>
-          Assigned User:
-          <select
-            name="TicketAssignedTo"
-            value={ticketSpread.TicketAssignedTo}
-            onChange={handleChange}
-          >
-            {users.map((user) => {
-              return (
-                <option key={user.id} value={user.id}>
-                  {user.username}
-                </option>
-              );
-            })}
-          </select>
-        </label>
-        <br />
-        <label>
-          Description:
-          <textarea
-            name="TicketDescription"
-            value={ticketSpread.TicketDescription}
-            onChange={handleChange}
-          />
-        </label>
-        <br />
-        <label>
-          Observed:
-          <textarea
-            name="TicketObserved"
-            value={ticketSpread.TicketObserved}
-            onChange={handleChange}
-          />
-        </label>
-        <br />
-        <label>
-          Expected:
-          <textarea
-            name="TicketExpected"
-            value={ticketSpread.TicketExpected}
-            onChange={handleChange}
-          />
-        </label>
-        <br />
-        <label>
-          Points (1-10):
-          <input
-            type="number"
-            name="TicketPoints"
-            value={ticketSpread.TicketPoints}
-            onChange={handleChange}
-            min="1"
-            max="10"
-          />
-        </label>
-        <br />
-        <label>
-          Priority:
-          <select
-            name="TicketPriority"
-            value={ticketSpread.TicketPriority}
-            onChange={handleChange}
-          >
-            <option value="VH">Very High</option>
-            <option value="H">High</option>
-            <option value="M">Medium</option>
-            <option value="L">Low</option>
-          </select>
-        </label>
-        <br />
-        <button type="submit">Submit Ticket</button>
-      </form>
+            Edit Ticket
+          </Button>
+        </form>
+      </div>
     </div>
   );
 }
