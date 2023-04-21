@@ -6,29 +6,66 @@ import { Button } from "react-bootstrap";
 import TicketTable from "./TicketTable.js";
 import ProjectContext from "../context/ProjectContext.js";
 
-export default function TicketList({ userRoles, thisUser, givenTickets }) {
-  let { allTickets, handleSearch, search } = useContext(ProjectContext);
+export default function TicketList({
+  userRoles,
+  thisUser,
+  givenTickets,
+  nextPage,
+  prevPage,
+  givenSearch = false,
+}) {
+  let { allTickets, handleSearch, pageNext, pagePrev, next, prev } =
+    useContext(ProjectContext);
   const [isLoading, setIsLoading] = useState(false);
 
+  if (!nextPage) {
+    nextPage = next;
+  }
+
+  if (!prevPage) {
+    prevPage = prev;
+  }
+
   return (
-    <div className="Container--TicketList">
-      <input
-        className="Search--Ticket"
-        type="text"
-        onChange={(e) => handleSearch(e.target.value)}
-        placeholder="Search for tickets..."
-      />
-      {givenTickets.length === 0 ? (
-        <p>no tickets to display</p>
-      ) : (
-        <TicketTable
-          userRole={userRoles}
-          tickets={givenTickets}
-          Loading={false}
-          search={search}
-          user={thisUser}
+    <div>
+      {!givenSearch && (
+        <input
+          className="Search--Ticket"
+          type="text"
+          onChange={(e) => handleSearch(e.target.value)}
+          placeholder="Search for tickets..."
         />
       )}
+      <div className="Container--TicketList">
+        {givenTickets.length === 0 ? (
+          <p>no tickets to display</p>
+        ) : (
+          <TicketTable
+            userRole={userRoles}
+            tickets={givenTickets}
+            Loading={false}
+            user={thisUser}
+          />
+        )}
+        <span className="Pages">
+          <Button
+            className="backButton"
+            onClick={() => pagePrev(prevPage)}
+            variant="primary"
+            size="md"
+          >
+            prev
+          </Button>
+          <Button
+            className="nextButton"
+            onClick={() => pageNext(nextPage)}
+            variant="primary"
+            size="md"
+          >
+            next
+          </Button>
+        </span>
+      </div>
     </div>
   );
 }

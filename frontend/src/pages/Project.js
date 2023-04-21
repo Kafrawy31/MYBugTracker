@@ -9,7 +9,17 @@ import TicketList from "../components/TicketList.js";
 import { useNavigate } from "react-router-dom";
 
 function Project() {
-  let { project, tickets, editProject } = useContext(ProjectContext);
+  let {
+    project,
+    tickets,
+    editProject,
+    projectNext,
+    projectPrev,
+    projectSearch,
+    projectTickets,
+    allTickets,
+    handleProjectSearch,
+  } = useContext(ProjectContext);
   let { devUser } = useContext(AuthContext);
   let [members, setMembers] = useState([]);
   const navigate = useNavigate();
@@ -47,7 +57,6 @@ function Project() {
     navigate("/homepage");
     window.location.reload();
   };
-
   return (
     <div>
       <Header />
@@ -55,11 +64,21 @@ function Project() {
       <div className="Project--Parent">
         <p className="Project--Title">{project.ProjectName}</p>
         <div className="table-and-member-container">
-          <TicketList userRoles={devUser.UserRole} givenTickets={tickets} />
+          <input
+            className="Search--Ticket"
+            type="text"
+            onChange={(e) => handleProjectSearch(e.target.value)}
+            placeholder="Search for tickets..."
+          />
+          <TicketList
+            userRoles={devUser.UserRole}
+            givenTickets={tickets}
+            givenSearch={true}
+          />
         </div>
 
         <div className="Member--And--Edit--Container">
-          {devUser.UserRole === "Senior" && tickets.length > 0 && (
+          {devUser.UserRole === "Senior" && (
             <div className="Member--Table--Container">
               <h6 className="members-header">Members on Project</h6>
               <table className="Members--Table">
@@ -82,7 +101,7 @@ function Project() {
               </table>
             </div>
           )}
-          {devUser.UserRole === "Senior" && tickets.length > 0 && (
+          {devUser.UserRole === "Senior" && (
             <div className="Edit--Project--Container">
               <form className="Edit--Project--Form" onSubmit={handleSubmit}>
                 <div className="Pr">

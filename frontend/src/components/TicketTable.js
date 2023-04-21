@@ -98,25 +98,6 @@ export default function TicketTable({
             })}
         </tbody>
       </Table>
-
-      <span className="Pages">
-        <Button
-          className="backButton"
-          onClick={() => pagePrev(prev)}
-          variant="primary"
-          size="md"
-        >
-          prev
-        </Button>
-        <Button
-          className="nextButton"
-          onClick={() => pageNext(next)}
-          variant="primary"
-          size="md"
-        >
-          next
-        </Button>
-      </span>
     </>
   );
 }

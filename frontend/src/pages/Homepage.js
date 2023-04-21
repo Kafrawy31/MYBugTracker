@@ -8,13 +8,17 @@ import ProjectContext from "../context/ProjectContext.js";
 
 function Homepage() {
   let { user, getUser, devUser } = useContext(AuthContext);
-  let { allTickets } = useContext(ProjectContext);
+  let { allTickets, tickets, search } = useContext(ProjectContext);
 
   useEffect(() => {
     getUser();
   }, []);
+
+  if (!devUser) {
+    return <p>Loading...</p>;
+  }
+
   let userRole = devUser.UserRole;
-  console.log(devUser);
   return (
     <div>
       <Header Role={userRole} />
@@ -26,7 +30,8 @@ function Homepage() {
         <TicketList
           userRoles={userRole}
           thisUser={devUser}
-          givenTickets={allTickets}
+          givenTickets={tickets}
+          search={search}
         />
         <Leaderboard />
       </div>

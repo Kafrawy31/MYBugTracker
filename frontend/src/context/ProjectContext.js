@@ -18,7 +18,12 @@ export const ProjectContextProvider = ({ children }) => {
   const [allTickets, setAllTickets] = useState([]);
   const [next, setNext] = useState(null);
   const [prev, setPrev] = useState(null);
+  const [projectNext, setProjectNext] = useState(null);
+  const [projectPrev, setProjectPrev] = useState(null);
+  const [projectTickets, setProjectTickets] = useState([]);
   const [search, setSearch] = useState("");
+  const [projectSearch, setProjectSearch] = useState("");
+  const [accountSearch, setAccountSearch] = useState("");
   const [ticketId, setTicketId] = useState(null);
   const [ticketProject, setTicketProject] = useState(null);
   const [projects, setProjects] = useState([]);
@@ -49,13 +54,32 @@ export const ProjectContextProvider = ({ children }) => {
   useEffect(() => {
     const fetchTickets = async () => {
       const response = await axios(
-        `http://127.0.0.1:8000/api/project-tickets/${projectId}/`
+        `http://127.0.0.1:8000/api/project-tickets/${projectId}/?limit=4&q=${projectSearch}`
       );
-      setTickets(response.data);
+      setTickets(response.data.results);
+      setNext(response.data.next);
+      setPrev(response.data.previous);
+    };
+    console.log(
+      `http://127.0.0.1:8000/api/project-tickets/${projectId}/?limit=4&q=${projectSearch}`
+    );
+    fetchTickets();
+  }, [ticketProject, projectSearch]);
+
+  useEffect(() => {
+    const fetchUserTickets = async () => {
+      try {
+        const response = await axios(
+          `http://127.0.0.1:8000/api/assigned-tickets/${curr_id}/?limit=4&q=${accountSearch}`
+        );
+        setTickets(response.data.results);
+        setNext(response.data.next);
+        setPrev(response.data.previous);
+      } catch (err) {}
     };
 
-    fetchTickets();
-  }, [ticketProject]);
+    fetchUserTickets();
+  }, [curr_id, accountSearch]);
 
   useEffect(() => {
     const fetchAllTickets = async () => {
@@ -63,7 +87,7 @@ export const ProjectContextProvider = ({ children }) => {
         const response = await axios(
           `http://127.0.0.1:8000/api/ticket-list/?limit=4&search=${search}`
         );
-        setAllTickets(response.data.results);
+        setTickets(response.data.results);
         setNext(response.data.next);
         setPrev(response.data.previous);
       } catch (err) {}
@@ -72,32 +96,37 @@ export const ProjectContextProvider = ({ children }) => {
     fetchAllTickets();
   }, [search]);
 
-  useEffect(() => {
-    const fetchUserTickets = async () => {
-      try {
-        const response = await axios(
-          `http://127.0.0.1:8000/api/assigned-tickets/${curr_id}`
-        );
-        setUserTickets(response.data);
-      } catch (err) {}
-    };
-
-    fetchUserTickets();
-  }, [curr_id]);
-
-  const pageNext = async (next) => {
+  const pageNext = async () => {
     try {
       const response = await axios(next);
-      setAllTickets(response.data.results);
+      setTickets(response.data.results);
       setNext(response.data.next);
       setPrev(response.data.previous);
     } catch (err) {}
   };
 
-  const pagePrev = async (prev) => {
+  const pagePrev = async () => {
     try {
       const response = await axios(prev);
-      setAllTickets(response.data.results);
+      setTickets(response.data.results);
+      setNext(response.data.next);
+      setPrev(response.data.previous);
+    } catch (err) {}
+  };
+
+  const pageNextProject = async () => {
+    try {
+      const response = await axios(projectNext);
+      setTickets(response.data.results);
+      setProjectNext(response.data.next);
+      setProjectPrev(response.data.previous);
+    } catch (err) {}
+  };
+
+  const pagePrevProject = async () => {
+    try {
+      const response = await axios(projectPrev);
+      setTickets(response.data.results);
       setNext(response.data.next);
       setPrev(response.data.previous);
     } catch (err) {}
@@ -289,6 +318,14 @@ export const ProjectContextProvider = ({ children }) => {
     setSearch(search);
   };
 
+  const handleProjectSearch = (projectSearch) => {
+    setProjectSearch(projectSearch);
+  };
+
+  const handleAccountSearch = (accountSearch) => {
+    setAccountSearch(accountSearch);
+  };
+
   const projectContextData = {
     handleFetchProject,
     project,
@@ -312,6 +349,10 @@ export const ProjectContextProvider = ({ children }) => {
     register,
     createProject,
     editProject,
+    handleProjectSearch,
+    handleAccountSearch,
+    pagePrevProject,
+    pageNextProject,
   };
 
   return (

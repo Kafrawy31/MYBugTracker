@@ -25,8 +25,8 @@ urlpatterns = [
     path('devuser-update/<str:pk>', views.devUserUpdate, name='devuser-update'),
     path('user-list/',UserList.as_view(), name='user-list'),
     path('devuser-list/', views.devUserList, name='devuser-list'),
-    path('assigned-tickets/<str:pk>/', views.ticketByUser, name = 'assigned-tickets'),
-    path('project-tickets/<str:pk>/', views.ticketByProject, name = 'ticket-project'),
+    path('assigned-tickets/<str:pk>/', ticketByUser.as_view(), name = 'assigned-tickets'),
+    path('project-tickets/<str:pk>/', ticketByProject.as_view(), name = 'ticket-project'),
     path('project-members/<str:pk>/', views.DevUsersAssignedToProject, name = 'project-members'),
     
 ]

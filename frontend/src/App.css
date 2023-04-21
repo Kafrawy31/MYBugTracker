@@ -395,3 +395,8 @@ td {
 .Ticket--AssignedUser {
   overflow-y: scroll;
 }
+
+.backButtonProject {
+  min-width: 200px;
+  margin-left: 550px;
+}

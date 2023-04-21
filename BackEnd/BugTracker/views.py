@@ -12,6 +12,8 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.pagination import PageNumberPagination
+from django.db.models import Q
+
 
 
 
@@ -60,20 +62,7 @@ class UserCreate(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-class ticketList(generics.ListAPIView):
-    queryset = Ticket.objects.all()
-    serializer_class = TicketSerializer
-    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
-    search_fields = ['TicketProject__ProjectName',
-                     'TicketId',
-                     'TicketDescription',
-                     'TicketPriority',
-                     'TicketPoints',
-                     'TicketStatus',
-                     'TicketSubmittedBy__username',
-                     'TicketAssignedTo__username'
-                     ]
-    ordering = ['-TicketDateOpened']
+
     
 
 
@@ -191,17 +180,71 @@ def devUserList(request):
     serializer = DevUserSerializer(devs, many = True)
     return Response(serializer.data)
     
-@api_view(['GET'])
-def ticketByProject(request,pk):
-    Tickets = Ticket.objects.filter(TicketProject=pk)
-    serializer = TicketSerializer(Tickets, many=True)
-    return Response(serializer.data)
 
-@api_view(['GET'])
-def ticketByUser(request,pk):
-    Tickets = Ticket.objects.filter(TicketAssignedTo=pk)
-    serializer = TicketSerializer(Tickets, many=True)
-    return Response(serializer.data)
+
+class ticketList(generics.ListAPIView):
+    queryset = Ticket.objects.all()
+    serializer_class = TicketSerializer
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['TicketProject__ProjectName',
+                     'TicketId',
+                     'TicketDescription',
+                     'TicketPriority',
+                     'TicketPoints',
+                     'TicketStatus',
+                     'TicketSubmittedBy__username',
+                     'TicketAssignedTo__username'
+                     ]
+    ordering = ['-TicketDateOpened']
+    
+class ticketByProject(generics.ListAPIView):
+    serializer_class = TicketSerializer
+    search_fields = ['TicketProject__ProjectName',
+                     'TicketId',
+                     'TicketDescription',
+                     'TicketPriority',
+                     'TicketPoints',
+                     'TicketStatus',
+                     'TicketSubmittedBy__username',
+                     'TicketAssignedTo__username'
+                     ]
+    
+    def get_queryset(self):
+        pk = self.kwargs.get('pk')
+        q = self.request.GET.get('q')
+        queryset = Ticket.objects.filter(TicketProject=pk).order_by('-TicketDateOpened')
+        if q:
+            queryset = queryset.filter(
+                Q(TicketProject__ProjectName__icontains=q) |
+                Q(TicketId__icontains=q) |
+                Q(TicketDescription__icontains=q) |
+                Q(TicketPriority__icontains=q) |
+                Q(TicketPoints__icontains=q) |
+                Q(TicketStatus__icontains=q) |
+                Q(TicketSubmittedBy__username__icontains=q) |
+                Q(TicketAssignedTo__username__icontains=q)
+            )
+        return queryset
+
+class ticketByUser(generics.ListAPIView):
+    serializer_class = TicketSerializer
+    search_fields = ['TicketProject__ProjectName',
+                     'TicketId',
+                     'TicketDescription',
+                     'TicketPriority',
+                     'TicketPoints',
+                     'TicketStatus',
+                     'TicketSubmittedBy__username',
+                     'TicketAssignedTo__username'
+                     ]
+    
+    def get_queryset(self):
+        pk = self.kwargs.get('pk')
+        queryset = Ticket.objects.filter(TicketAssignedTo=pk).order_by('-TicketDateOpened')
+        return queryset
+    
+
+
 
 @api_view(['GET'])
 def DevUsersAssignedToProject(request,pk):

@@ -7,7 +7,7 @@ import TicketList from "../components/TicketList.js";
 
 function Account() {
   let { user, getUser, devUser } = useContext(AuthContext);
-  let { userTickets } = useContext(ProjectContext);
+  let { tickets, handleAccountSearch } = useContext(ProjectContext);
   return (
     <div>
       <Header />
@@ -21,7 +21,17 @@ function Account() {
         <p className="TotalPoints--Account">
           Your total career points: <strong>{devUser.UserPoints}</strong>
         </p>
-        <TicketList userRole={devUser.userRole} givenTickets={userTickets} />
+        <input
+          className="Search--Ticket"
+          type="text"
+          onChange={(e) => handleAccountSearch(e.target.value)}
+          placeholder="Search for tickets..."
+        />
+        <TicketList
+          userRole={devUser.userRole}
+          givenTickets={tickets}
+          givenSearch={true}
+        />
       </div>
     </div>
   );
