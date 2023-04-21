@@ -237,10 +237,22 @@ class ticketByUser(generics.ListAPIView):
                      'TicketSubmittedBy__username',
                      'TicketAssignedTo__username'
                      ]
-    
+
     def get_queryset(self):
         pk = self.kwargs.get('pk')
+        q = self.request.GET.get('q')
         queryset = Ticket.objects.filter(TicketAssignedTo=pk).order_by('-TicketDateOpened')
+        if q:
+            queryset = queryset.filter(
+                Q(TicketProject__ProjectName__icontains=q) |
+                Q(TicketId__icontains=q) |
+                Q(TicketDescription__icontains=q) |
+                Q(TicketPriority__icontains=q) |
+                Q(TicketPoints__icontains=q) |
+                Q(TicketStatus__icontains=q) |
+                Q(TicketSubmittedBy__username__icontains=q) |
+                Q(TicketAssignedTo__username__icontains=q)
+            )
         return queryset
     
 
