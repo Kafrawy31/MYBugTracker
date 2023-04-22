@@ -4,13 +4,19 @@ import { Link } from "react-router-dom";
 import ProjectContext from "../context/ProjectContext.js";
 import Header from "../components/Header.js";
 import { useNavigate } from "react-router-dom";
+import AuthContext from "../context/AuthContext.js";
 
 export default function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   let { register } = useContext(ProjectContext);
+  let { user } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  if (user) {
+    navigate("/homepage");
+  }
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);

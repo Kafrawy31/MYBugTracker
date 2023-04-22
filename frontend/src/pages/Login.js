@@ -1,9 +1,15 @@
 import React, { useContext } from "react";
 import Header from "../components/Header.js";
 import AuthContext from "../context/AuthContext.js";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   let { userLogin, user } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  if (user) {
+    navigate("/homepage");
+  }
   return (
     <div className="Reg--Page">
       <Header />
