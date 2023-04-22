@@ -174,11 +174,12 @@ class UserList(generics.ListAPIView):
     serializer_class = CurrentUserSerializer
     
     
-@api_view(['GET'])
-def devUserList(request):
-    devs = DevUser.objects.all()
-    serializer = DevUserSerializer(devs, many = True)
-    return Response(serializer.data)
+
+class devUserList(generics.ListAPIView):
+    queryset = DevUser.objects.all()
+    serializer_class = DevUserSerializer
+    filter_backends = [filters.OrderingFilter]
+    ordering = ['-MonthlyPoints']
     
 
 

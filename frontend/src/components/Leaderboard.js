@@ -8,17 +8,13 @@ function Leaderboard() {
     const fetchMonthlyPoints = async () => {
       try {
         const response = await axios(`http://127.0.0.1:8000/api/devuser-list/`);
-        setMonthlyPoints(response.data);
+        setMonthlyPoints(response.data.results);
       } catch (err) {
         console.log(err);
       }
     };
     fetchMonthlyPoints();
   }, []);
-
-  const sortedMonthlyPoints = monthlyPoints
-    .sort((a, b) => b.MonthlyPoints - a.MonthlyPoints)
-    .slice(0, 5);
 
   let rank = 1;
   return (
@@ -33,7 +29,7 @@ function Leaderboard() {
           </tr>
         </thead>
         <tbody>
-          {sortedMonthlyPoints.map((developer) => {
+          {monthlyPoints.map((developer) => {
             return (
               <tr key={developer.UserId} className="devUserLeader">
                 <td>{rank++}</td>
