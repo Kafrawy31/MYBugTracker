@@ -17,6 +17,8 @@ function Ticket() {
     TicketStatus: editTicket.TicketStatus,
     TicketPriority: editTicket.TicketPriority,
     TicketPoints: editTicket.TicketPoints,
+    TicketObserved: editTicket.TicketObserved,
+    TicketExpected: editTicket.TicketExpected,
   });
 
   useEffect(() => {
@@ -31,6 +33,10 @@ function Ticket() {
       TicketExpected: editTicket.TicketExpected,
     });
   }, [editTicket]);
+
+  if (ticketSpread.TicketAssignedTo !== "") {
+    ticketSpread.TicketStatus = "PE";
+  }
 
   useEffect(() => {
     const fetchProjects = async () => {

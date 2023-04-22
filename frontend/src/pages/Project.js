@@ -9,17 +9,8 @@ import TicketList from "../components/TicketList.js";
 import { useNavigate } from "react-router-dom";
 
 function Project() {
-  let {
-    project,
-    tickets,
-    editProject,
-    projectNext,
-    projectPrev,
-    projectSearch,
-    projectTickets,
-    allTickets,
-    handleProjectSearch,
-  } = useContext(ProjectContext);
+  let { project, tickets, editProject, handleProjectSearch } =
+    useContext(ProjectContext);
   let { devUser } = useContext(AuthContext);
   let [members, setMembers] = useState([]);
   const navigate = useNavigate();

@@ -9,6 +9,12 @@ function ViewTicket() {
   let { user, getUser, devUser } = useContext(AuthContext);
 
   let { ticket, claimTicket, closeTicket } = useContext(ProjectContext);
+  console.log("this is ticket assigned to:", ticket.TicketAssignedTo);
+  console.log("this is dev user name:", devUser.devUserName);
+
+  if (!ticket) {
+    return <p> loading... </p>;
+  }
 
   return (
     <div className="Ticket--Container">
@@ -68,8 +74,7 @@ function ViewTicket() {
           <span className="span2">{ticket.TicketSubmittedBy}</span>
         </span>
 
-        {ticket.TicketAssignedTo === devUser.devUserName &&
-        ticket.TicketStatus === "PE" ? (
+        {ticket.TicketAssignedTo === devUser.devUserName ? (
           <Button
             className="TicketButton"
             variant="info"

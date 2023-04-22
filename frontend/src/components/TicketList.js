@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import ReactDOM from "react-dom/client";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useState } from "react";
 import { Button } from "react-bootstrap";
 import TicketTable from "./TicketTable.js";
 import ProjectContext from "../context/ProjectContext.js";
@@ -14,9 +13,8 @@ export default function TicketList({
   prevPage,
   givenSearch = false,
 }) {
-  let { allTickets, handleSearch, pageNext, pagePrev, next, prev } =
+  let { handleSearch, pageNext, pagePrev, next, prev } =
     useContext(ProjectContext);
-  const [isLoading, setIsLoading] = useState(false);
 
   if (!nextPage) {
     nextPage = next;
@@ -26,6 +24,8 @@ export default function TicketList({
     prevPage = prev;
   }
 
+  console.log("Link for prev page", prev);
+  console.log("Link for next page", next);
   return (
     <div>
       {!givenSearch && (

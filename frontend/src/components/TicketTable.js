@@ -1,8 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
-import AuthContext from "../context/AuthContext.js";
+import React, { useContext } from "react";
 import { Table } from "react-bootstrap";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import { Button } from "react-bootstrap/";
+import { Link, useNavigate } from "react-router-dom";
 import moment from "moment";
 import ProjectContext from "../context/ProjectContext.js";
 export default function TicketTable({
@@ -10,19 +8,8 @@ export default function TicketTable({
   search = "",
   ticketTerenary = true,
   userRole,
-  user = {},
-  Loading,
 }) {
-  let {
-    handleFetchTicketEdit,
-    pagePrev,
-    pageNext,
-    next,
-    prev,
-    handleFetchTicket,
-  } = useContext(ProjectContext);
-
-  const navigate = useNavigate();
+  let { handleFetchTicketEdit, handleFetchTicket } = useContext(ProjectContext);
 
   return (
     <>
@@ -62,10 +49,7 @@ export default function TicketTable({
                   <td>{ticket.TicketStatus}</td>
                   <td>{ticket.TicketPriority}</td>
                   <td>{ticket.TicketPoints}</td>
-                  <td>
-                    <a href="#"></a>
-                    {ticket.TicketProject}
-                  </td>
+                  <td>{ticket.TicketProject}</td>
                   <td>{ticket.TicketAssignedTo}</td>
                   <td>{ticket.TicketSubmittedBy}</td>
                   <td>{ticket.TicketCodeLocation}</td>
