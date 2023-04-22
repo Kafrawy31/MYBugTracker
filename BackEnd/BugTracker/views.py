@@ -173,7 +173,6 @@ class UserList(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = CurrentUserSerializer
     
-    
 
 class devUserList(generics.ListAPIView):
     queryset = DevUser.objects.all()
