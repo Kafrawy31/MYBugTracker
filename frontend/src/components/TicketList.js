@@ -23,9 +23,6 @@ export default function TicketList({
   if (!prevPage) {
     prevPage = prev;
   }
-
-  console.log("Link for prev page", prev);
-  console.log("Link for next page", next);
   return (
     <div>
       {!givenSearch && (
