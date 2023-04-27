@@ -15,13 +15,16 @@ export const ProjectContextProvider = ({ children }) => {
   const [ticket, setTicket] = useState({});
   const [editTicket, setEditTicket] = useState({});
   const [editTicketId, setEditTicketId] = useState(null);
+  const [members, setMembers] = useState([]);
   const [allTickets, setAllTickets] = useState([]);
   const [next, setNext] = useState(null);
   const [prev, setPrev] = useState(null);
   const [projectNext, setProjectNext] = useState(null);
   const [projectPrev, setProjectPrev] = useState(null);
   const [projectTickets, setProjectTickets] = useState([]);
+  const [monthlyPoints, setMonthlyPoints] = useState([]);
   const [search, setSearch] = useState("");
+  const [allUsers, setAllUsers] = useState([]);
   const [projectSearch, setProjectSearch] = useState("");
   const [accountSearch, setAccountSearch] = useState("");
   const [ticketId, setTicketId] = useState(null);
@@ -46,10 +49,23 @@ export const ProjectContextProvider = ({ children }) => {
         handleFetchTickets(data.ProjectId);
       } else {
       }
+
+      const response2 = await fetch(
+        `http://localhost:8000/api/project-members/${projectId}`,
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      if (response2.status === 200) {
+        const data2 = await response2.json();
+        setMembers(data2);
+      } else {
+      }
     };
 
     fetchProject();
-  }, [projectId]);
+  }, [projectId, members]);
 
   useEffect(() => {
     const fetchTickets = async () => {
@@ -60,9 +76,6 @@ export const ProjectContextProvider = ({ children }) => {
       setNext(response.data.next);
       setPrev(response.data.previous);
     };
-    console.log(
-      `http://127.0.0.1:8000/api/project-tickets/${projectId}/?limit=4&q=${projectSearch}`
-    );
     fetchTickets();
   }, [ticketProject, projectSearch]);
 
@@ -96,6 +109,34 @@ export const ProjectContextProvider = ({ children }) => {
     fetchAllTickets();
   }, [search]);
 
+  const remove = async (id, pid) => {
+    const requestOptions = {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        remove_project: pid,
+      }),
+    };
+    const response = await fetch(
+      `http://localhost:8000/api/devuser-update/${id}`,
+      requestOptions
+    );
+  };
+
+  const join = async (id, pid) => {
+    const requestOptions = {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        add_project: pid,
+      }),
+    };
+    const response = await fetch(
+      `http://localhost:8000/api/devuser-update/${id}`,
+      requestOptions
+    );
+    navigate("/homepage");
+  };
   const pageNext = async () => {
     try {
       const response = await axios(next);
@@ -241,6 +282,15 @@ export const ProjectContextProvider = ({ children }) => {
     );
   };
 
+  const fetchMonthlyPoints = async () => {
+    try {
+      const response = await axios(`http://127.0.0.1:8000/api/devuser-list/`);
+      setMonthlyPoints(response.data.results);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const closeTicket = async (ticketId, userId, Tpoints, UPoints, MUPoints) => {
     const newTotal = Tpoints + UPoints;
     const monthlyNewTotal = Tpoints + MUPoints;
@@ -353,6 +403,11 @@ export const ProjectContextProvider = ({ children }) => {
     handleAccountSearch,
     pagePrevProject,
     pageNextProject,
+    remove,
+    fetchMonthlyPoints,
+    monthlyPoints,
+    members,
+    join,
   };
 
   return (

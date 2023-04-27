@@ -30,15 +30,19 @@ function ViewTicket() {
           <span className="span2">{ticket.TicketDescription}</span>
         </div>
 
-        <span>
-          <span className="span1">Observed Behavior:</span>
-          <span className="span2">{ticket.TicketObserved}</span>
-        </span>
+        <div className="SecondSpan">
+          <span>
+            <span className="span1">Observed Behavior:</span>
+            <span className="span2">{ticket.TicketObserved}</span>
+          </span>
+        </div>
 
-        <span>
-          <span className="span1">Expected Behavior:</span>
-          <span className="span2">{ticket.TicketExpected}</span>
-        </span>
+        <div className="ThirdSpan">
+          <span>
+            <span className="span1">Expected Behavior:</span>
+            <span className="span2">{ticket.TicketExpected}</span>
+          </span>
+        </div>
         <span>
           <span className="span1">Ticket Status:</span>
           <span className="span2">{ticket.TicketStatus}</span>

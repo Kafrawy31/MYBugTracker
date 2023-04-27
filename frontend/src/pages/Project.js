@@ -6,28 +6,25 @@ import AuthContext from "../context/AuthContext.js";
 import { Button } from "react-bootstrap/";
 import axios from "axios";
 import TicketList from "../components/TicketList.js";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function Project() {
-  let { project, tickets, editProject, handleProjectSearch } =
-    useContext(ProjectContext);
+  let {
+    project,
+    tickets,
+    editProject,
+    handleProjectSearch,
+    remove,
+    join,
+    members,
+  } = useContext(ProjectContext);
   let { devUser } = useContext(AuthContext);
-  let [members, setMembers] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
     setProjectDescription(project.ProjectDescription);
     setProjectStatus(project.ProjectStatus);
   }, [project]);
-
-  useEffect(() => {
-    const getMembers = async () => {
-      const response = await axios(
-        `http://localhost:8000/api/project-members/${project.ProjectId}/`
-      );
-      setMembers(response.data);
-    };
-    getMembers();
-  }, [project.ProjectId]);
+  let userprojects = devUser.UserProject;
 
   const [projectDescription, setProjectDescription] = useState(
     project.ProjectDescription
@@ -61,6 +58,14 @@ function Project() {
             onChange={(e) => handleProjectSearch(e.target.value)}
             placeholder="Search for tickets..."
           />
+          {userprojects.indexOf(project.ProjectId) === -1 && (
+            <Button
+              className="Join--project"
+              onClick={() => join(devUser.UserId, project.ProjectId)}
+            >
+              Join project
+            </Button>
+          )}
           <TicketList
             userRoles={devUser.UserRole}
             givenTickets={tickets}
@@ -78,6 +83,7 @@ function Project() {
                     <th className="id-column">id</th>
                     <th className="name-column">name</th>
                     <th className="role-column">role</th>
+                    <th className="Remove">Remove</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -86,6 +92,15 @@ function Project() {
                       <td>{member.UserId}</td>
                       <td>{member.devUserName}</td>
                       <td>{member.UserRole}</td>
+                      <td>
+                        <Link
+                          onClick={() =>
+                            remove(member.UserId, project.ProjectId)
+                          }
+                        >
+                          remove
+                        </Link>
+                      </td>
                     </tr>
                   ))}
                 </tbody>

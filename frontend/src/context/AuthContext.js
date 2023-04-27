@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("authTokens", JSON.stringify(data));
       navigate("/homepage");
     } else {
-      alert("something went wrong");
+      alert("Incorrect Credentials. Please try again");
     }
   };
 

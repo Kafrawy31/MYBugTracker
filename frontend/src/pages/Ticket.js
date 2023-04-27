@@ -34,10 +34,6 @@ function Ticket() {
     });
   }, [editTicket]);
 
-  if (ticketSpread.TicketAssignedTo !== "") {
-    ticketSpread.TicketStatus = "PE";
-  }
-
   useEffect(() => {
     const fetchProjects = async () => {
       const response = await axios("http://127.0.0.1:8000/api/project-list/");
@@ -53,7 +49,6 @@ function Ticket() {
       const response = await axios("http://127.0.0.1:8000/api/user-list/");
       if (response.status === 200) {
         setUsers(response.data.results);
-        console.log(response.data.results);
       }
     };
     fetchUsers();
@@ -67,11 +62,15 @@ function Ticket() {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (ticketSpread.TicketAssignedTo !== null) {
+      ticketSpread.TicketStatus = "PE";
+    }
     const requestOptions = {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(ticketSpread),
     };
+
     const response = await fetch(
       `http://127.0.0.1:8000/api/ticket-update/${editTicket.TicketId}`,
       requestOptions
@@ -112,6 +111,7 @@ function Ticket() {
               value={ticketSpread.TicketAssignedTo}
               onChange={handleChange}
             >
+              <option value={null}>NA</option>
               {users.map((user) => {
                 return (
                   <option key={user.id} value={user.id}>

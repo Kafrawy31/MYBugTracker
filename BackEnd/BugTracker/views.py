@@ -13,6 +13,7 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.pagination import PageNumberPagination
 from django.db.models import Q
+import json
 
 
 
@@ -31,7 +32,8 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
-
+class MyPaginaation(PageNumberPagination):
+    page_size = 20
 
 @api_view(['GET'])
 def apiOverview(request):
@@ -111,11 +113,23 @@ def ticketUpdate(request,pk):
 @api_view(['PATCH'])
 def devUserUpdate(request,pk):
     devuser = DevUser.objects.get(user = pk)
-    serializer = DevUserSerializer(instance=devuser, data=request.data, partial=True)
-    if serializer.is_valid():
-        serializer.save()
+    #serializer = DevUserSerializer(instance=devuser, data=request.data, partial=True)
+    data = json.loads(request.body)
+    project_id = data.get('projectId',None)
+    add_project = data.get('add_project',None)
+    remove_project = data.get('remove_project',None)
     
-    return Response(serializer.data)
+    if add_project:
+        devuser.UserProject.add(add_project)
+    elif remove_project:
+        try:
+            devuser.UserProject.remove(remove_project)
+        except ValueError:
+            return JsonResponse({'error': 'Project ID not found in userProjects list'}, status=400)
+
+    devuser.save()
+
+    return JsonResponse({'message': 'User projects updated successfully'}, status=200)
 
 @api_view(['DELETE'])
 def ticketDelete(request,pk):
@@ -158,7 +172,7 @@ def projectCreate(request):
 def projectUpdate(request,pk):
     project = Project.objects.get(ProjectId=pk)
     serializer = ProjectSerializer(instance=project, data=request.data, partial= True)
-    if serializer.is_valid():
+    if serializer.is_valid():   
         serializer.save()
     
     return Response(serializer.data)
@@ -177,10 +191,10 @@ class UserList(generics.ListAPIView):
 class devUserList(generics.ListAPIView):
     queryset = DevUser.objects.all()
     serializer_class = DevUserSerializer
+    pagination_class = MyPaginaation
     filter_backends = [filters.OrderingFilter]
     ordering = ['-MonthlyPoints']
     
-
 
 class ticketList(generics.ListAPIView):
     queryset = Ticket.objects.all()

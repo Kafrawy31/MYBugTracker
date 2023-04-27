@@ -29,7 +29,7 @@ function Leaderboard() {
           </tr>
         </thead>
         <tbody>
-          {monthlyPoints.map((developer) => {
+          {monthlyPoints.slice(0, 5).map((developer) => {
             return (
               <tr key={developer.UserId} className="devUserLeader">
                 <td>{rank++}</td>

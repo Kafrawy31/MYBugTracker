@@ -136,8 +136,22 @@ th {
   width: 100%;
 }
 
+.Join--project {
+  margin-left: 1300px;
+}
+
 .FirstSpan {
   margin-top: 30px;
+  max-width: 600px;
+  text-align: center;
+}
+.SecondSpan {
+  max-width: 600px;
+  text-align: center;
+}
+.ThirdSpan {
+  max-width: 600px;
+  text-align: center;
 }
 
 .span1 {
