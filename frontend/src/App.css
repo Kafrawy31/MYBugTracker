@@ -3,11 +3,168 @@
   padding: 0;
 }
 
-.Container--TicketList {
+body {
+  overflow-x: hidden; /* Hide scrollbars */
+}
+
+/* REGISTER / LOGIN PAGE */
+
+.form--container {
+  padding-top: 20vh;
+}
+
+.Wrap--Register--Page {
+  font-family: "Open Sans", sans-serif;
+  background: rgb(2, 2, 45);
+  margin: 0;
+  width: 100%;
+  height: 100vh;
+  background-image: linear-gradient(rgb(2, 2, 45), rgb(89, 89, 157));
+}
+
+.Wrap--Form {
+  background: transparent;
+  width: 60vh;
+  border-radius: 6%;
+  margin: 0 auto;
+  border: solid 2px white;
   display: flex;
   flex-direction: column;
-  width: 100%;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: nowrap;
 }
+
+.Register--Title {
+  font-size: 2rem;
+  color: white;
+  font-weight: 400;
+  margin-top: 3vh;
+  font-style: italic;
+}
+
+.username,
+.password,
+.email {
+  width: 80%;
+}
+
+.username {
+  margin-top: 2vh;
+}
+
+.username input::-webkit-input-placeholder,
+.password input::-webkit-input-placeholder,
+.email input::-webkit-input-placeholder {
+  font-size: 1rem;
+  text-align: center;
+  color: white;
+}
+
+.username input:focus,
+.password input:focus,
+.email input:focus {
+  background-color: transparent;
+  color: white;
+  border: #2980b9;
+}
+
+.form-control {
+  border: 2px solid white;
+  border-radius: 10px;
+  display: flex;
+  text-align: center;
+  color: white;
+  background-color: transparent;
+}
+
+.login-util {
+  height: 6vh;
+  width: 100%;
+  margin-top: 2vh;
+  display: flex;
+  align-items: center;
+}
+
+.login-util input {
+  margin-left: 5.6vh;
+  margin-right: 0.3vh;
+}
+
+.remember-me {
+  font-style: italic;
+  font-weight: bold;
+  color: white;
+  font-size: 0.9rem;
+}
+
+.forgot-password {
+  justify-self: flex-end;
+  margin-left: 18vh;
+  text-decoration: none;
+  color: white;
+  font-weight: normal;
+  font-size: smaller;
+}
+
+.login-util input {
+  margin-bottom: 1rem;
+}
+
+.Login {
+  background: white;
+  color: black;
+  border-radius: 200px;
+  width: 80%;
+  height: 6vh;
+  border: white 1px solid;
+  margin-bottom: 2vh;
+  float: left;
+}
+
+.Login:hover {
+  background: rgb(89, 89, 157);
+}
+
+.a--register {
+  color: white;
+  margin-bottom: 4vh;
+}
+
+.a--register span a {
+  color: white;
+  text-decoration: none;
+}
+
+.a--register span a:hover {
+  color: rgb(2, 2, 45);
+  text-decoration: none;
+}
+
+.Register--Buttons {
+  width: 75%;
+  display: flex;
+  margin: 3vh auto;
+  justify-content: space-evenly;
+}
+
+.Register--Button--1,
+.Register--Button--2 {
+  color: white;
+  width: 20vh;
+  background-color: transparent;
+  border-radius: 20px;
+}
+
+.Register--Button--1 {
+  border-color: rgb(2, 2, 45);
+}
+
+.Register--Button--1:hover {
+  background-color: rgb(2, 2, 45);
+}
+
+/* REGISTER / LOGIN PAGE */
 
 .Header {
   align-self: flex-start;
@@ -28,13 +185,9 @@
 }
 
 .nextButton {
-  margin-left: 20px;
-  min-width: 200px;
 }
 
 .backButton {
-  margin-right: 20px;
-  min-width: 200px;
 }
 
 .Container--Homepage {
@@ -50,7 +203,10 @@
 
 .TicketTable th {
   font-style: italic;
-  font-weight: 500;
+  font-weight: 400;
+  text-wrap: nowrap;
+  font-size: small;
+  text-align: center;
   background-color: #00539cff;
   color: #eea47fff;
 }
@@ -294,95 +450,6 @@ td {
   align-items: center;
 }
 
-.Wrap--Register--Page {
-  font-family: "Open Sans", sans-serif;
-  background: #3498db;
-  margin: 0 auto 0 auto;
-  width: 100%;
-  text-align: center;
-  margin: 0px 0px 20px 0px;
-}
-
-.Wrap--Register--Page div {
-  font-size: 12px;
-  text-decoration: none;
-  color: black;
-}
-
-.Register--Title {
-  font-size: 1.5em;
-  color: #525252;
-  font-weight: 700;
-  font-size: 35px;
-  font-style: italic;
-}
-
-.Wrap--Register {
-  background: white;
-  width: 300px;
-  border-radius: 6px;
-  margin: 0 auto 0 auto;
-  padding: 0px 0px 70px 0px;
-  border: #2980b9 4px solid;
-}
-
-.email {
-  background: #ecf0f1;
-  border: #ccc 1px solid;
-  border-bottom: #ccc 2px solid;
-  padding: 8px;
-  width: 292px;
-  color: #aaaaaa;
-  margin-top: 10px;
-  font-size: 1em;
-  border-radius: 4px;
-  margin-bottom: 10px;
-}
-
-.username {
-  background: #ecf0f1;
-  border: #ccc 1px solid;
-  border-bottom: #ccc 2px solid;
-  padding: 8px;
-  width: 280x;
-  color: #aaaaaa;
-  margin-top: 10px;
-  font-size: 1em;
-  border-radius: 4px;
-}
-
-.password {
-  border-radius: 4px;
-  background: #ecf0f1;
-  border: #ccc 1px solid;
-  padding: 8px;
-  width: 292px;
-  font-size: 1em;
-  margin-bottom: 10px;
-  margin-top: 10px;
-}
-
-.Login {
-  background: #2ecc71;
-  width: 125px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  color: white;
-  border-radius: 4px;
-  border: #27ae60 1px solid;
-
-  margin-top: 20px;
-  margin-bottom: 20px;
-  float: left;
-  margin-left: 81px;
-  font-weight: 800;
-  font-size: 0.8em;
-}
-
-.Login:hover {
-  background: #2cc06b;
-}
-
 #btn2 {
   float: left;
   background: #3498db;
@@ -392,7 +459,6 @@ td {
   color: white;
   border-radius: 4px;
   border: #2980b9 1px solid;
-
   margin-top: 20px;
   margin-bottom: 20px;
   margin-left: 10px;
@@ -404,8 +470,6 @@ td {
   background: #3594d2;
 }
 
-/* register and login css taken from https://codepen.io/g13nn/pen/DBVpVE */
-
 .Ticket--AssignedUser {
   overflow-y: scroll;
 }
@@ -414,3 +478,196 @@ td {
   min-width: 200px;
   margin-left: 550px;
 }
+
+.status--container {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+}
+
+.ticket--table {
+  text-wrap: nowrap;
+  font-size: 10px;
+  min-width: 100%;
+  border-bottom: solid black 2px;
+  border-left: solid black 1px;
+  margin-bottom: 1.2rem;
+}
+
+.ticket--table th {
+  text-align: center;
+  height: 3rem;
+  background-color: black;
+  color: white;
+  border-left: 2px solid white;
+}
+
+.ticket--table th:first-child {
+  border-left: 1px solid black;
+}
+
+.ticket--description,
+.ticket--location {
+  text-wrap: wrap;
+}
+
+.ticket--table td {
+  justify-content: center;
+  text-align: left;
+  border: none;
+  border-right: solid 1px black;
+  padding: 0.1rem;
+  margin: 0.2rem;
+}
+
+.ticket--table th {
+  padding: 0 1rem;
+}
+
+.ticket--table .first {
+  font-weight: bold;
+}
+
+.ticket--table thead tr th:first-child {
+  font-weight: bold;
+}
+
+.ticket--table th:first-child {
+  font-weight: bold;
+}
+
+.faTicket {
+  margin-left: 4.5rem;
+}
+
+.Container--TicketList {
+  display: flex;
+  flex-direction: column;
+  width: 85%;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.search--container {
+  display: flex;
+  align-items: center; /* Align items vertically centered */
+  justify-content: space-between; /* Distribute space between items */
+  width: 100%;
+  margin-top: 0.7rem;
+  margin-bottom: 0.2rem;
+  padding: 0.3rem;
+  border: 2px solid #555555;
+  border-radius: 20px;
+  background-color: #e6e4e4;
+}
+
+.search--container span,
+.search--container input,
+.search--container button {
+  margin: 0 0.5rem; /* Optional: adjust spacing between elements */
+}
+
+.ticket--searchbar {
+  flex: 1; /* Take up available space */
+  border: none;
+  background-color: transparent;
+  padding-left: 0;
+}
+
+.ticket--searchbar:focus {
+  outline: none;
+}
+
+.search--img {
+  width: 2rem;
+  height: auto; /* Maintain aspect ratio */
+  margin: 0 0.2rem;
+}
+.ticket--searchbar::placeholder {
+  --padding: 0px;
+  padding: var(--padding);
+}
+
+.t .ticket--table .first {
+  border-left: 1px solid black;
+  font-weight: bold;
+}
+
+.ticket--table .ticket--points {
+  justify-content: center;
+  text-align: center;
+  border: none;
+  border-left: solid 1px black;
+  border-right: solid 1px black;
+}
+
+/* Priority styling */
+.ticket--table .priority-very-high {
+  color: black;
+  width: 100%;
+  height: 100;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  border-radius: 40px;
+  border: none;
+  background-color: rgba(227, 0, 0, 0.369);
+}
+
+.ticket--table .priority-high {
+  color: black;
+  width: 100%;
+  height: 100;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  border-radius: 40px;
+  border: none;
+  background-color: rgba(255, 255, 0, 0.3);
+}
+
+.ticket--table .priority-medium {
+  color: black;
+  width: 100%;
+  height: 100;
+  text-align: center;
+  align-items: center;
+  border-radius: 40px;
+  border: none;
+  background-color: rgba(0, 255, 255, 0.3);
+}
+
+.ticket--table .priority-low {
+  color: black;
+  width: 100%;
+  height: 100;
+  text-align: center;
+  align-items: center;
+  border-radius: 40px;
+  border: none;
+  background-color: rgba(0, 255, 0, 0.3);
+}
+
+/* Priority styling */
+
+/* Status styling */
+
+.status-closed {
+  text-decoration: line-through;
+}
+
+.status-pending {
+  color: green;
+}
+
+/* Status styling */
+
+.ticket--page {
+  background-color: none;
+}
+
+/* Homepage styling */
+
+/* Homepage styling */

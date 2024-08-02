@@ -14,6 +14,8 @@ import { AuthProvider } from "./context/AuthContext.js";
 import { ProjectContextProvider } from "./context/ProjectContext.js";
 import Project from "./pages/Project.js";
 import CreateProject from "./pages/CreateProject.js";
+import Tickets from "./pages/Tickets.js";
+import Homedev from "./pages/Homedev.js";
 
 function App() {
   return (
@@ -62,6 +64,22 @@ function App() {
                 element={
                   <Private>
                     <Account />
+                  </Private>
+                }
+              />
+              <Route
+                path="/tickets"
+                element={
+                  <Private>
+                    <Tickets />
+                  </Private>
+                }
+              />
+              <Route
+                path="/homedev"
+                element={
+                  <Private>
+                    <Homedev />
                   </Private>
                 }
               />

@@ -70,7 +70,7 @@ export const ProjectContextProvider = ({ children }) => {
   useEffect(() => {
     const fetchTickets = async () => {
       const response = await axios(
-        `http://127.0.0.1:8000/api/project-tickets/${projectId}/?limit=4&q=${projectSearch}`
+        `http://127.0.0.1:8000/api/project-tickets/${projectId}/?limit=8&q=${projectSearch}`
       );
       setTickets(response.data.results);
       setNext(response.data.next);
@@ -98,7 +98,7 @@ export const ProjectContextProvider = ({ children }) => {
     const fetchAllTickets = async () => {
       try {
         const response = await axios(
-          `http://127.0.0.1:8000/api/ticket-list/?limit=4&search=${search}`
+          `http://127.0.0.1:8000/api/ticket-list/?limit=16&search=${search}`
         );
         setTickets(response.data.results);
         setNext(response.data.next);

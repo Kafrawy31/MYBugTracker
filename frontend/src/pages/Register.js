@@ -37,56 +37,57 @@ export default function Register() {
   };
 
   return (
-    <div className="Wrap--Register--Page">
+    <div className="Reg--Page">
       <Header />
-      <h1 className="Register--Title">Sign Up</h1>
-      <div className="Wrap--Register">
-        <form onSubmit={handleSubmit}>
-          <div className="username">
-            <label htmlFor="formGroupExampleInput">Username</label>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="username"
-              value={username}
-              onChange={handleUsernameChange}
-            />
-          </div>
-          <div className="email">
-            <label htmlFor="formGroupExampleInput2">Email</label>
-            <input
-              type="email"
-              className="form-control"
-              placeholder="Email"
-              value={email}
-              onChange={handleEmailChange}
-            />
-          </div>
-          <div className="password">
-            <label htmlFor="formGroupExampleInput2">Password</label>
-            <input
-              type="password"
-              className="form-control"
-              placeholder="Password"
-              value={password}
-              onChange={handlePasswordChange}
-            />
-          </div>
-          <div className="registerbuttons">
-            <Button
-              type="submit"
-              className="Register--Button"
-              variant="outline-success"
-            >
-              Sign up
-            </Button>
-            <Link to="/login">
-              <Button className="Register--Button" variant="outline-secondary">
-                Login
+      <div className="Wrap--Register--Page">
+        <div className="form--container">
+          <form className="Wrap--Form" onSubmit={handleSubmit}>
+            <h1 className="Register--Title">Sign Up</h1>
+            <div className="username">
+              <label htmlFor="formGroupExampleInput"></label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Username"
+                value={username}
+                onChange={handleUsernameChange}
+              />
+            </div>
+            <div className="email">
+              <label htmlFor="formGroupExampleInput2"></label>
+              <input
+                type="email"
+                className="form-control"
+                placeholder="Email"
+                value={email}
+                onChange={handleEmailChange}
+              />
+            </div>
+            <div className="password">
+              <label htmlFor="formGroupExampleInput2"></label>
+              <input
+                type="password"
+                className="form-control"
+                placeholder="Password"
+                value={password}
+                onChange={handlePasswordChange}
+              />
+            </div>
+            <div className="Register--Buttons">
+              <Button type="submit" className="Register--Button--1">
+                Sign up
               </Button>
-            </Link>
-          </div>
-        </form>
+              <Link to="/login">
+                <Button
+                  className="Register--Button--2"
+                  variant="outline-secondary"
+                >
+                  Login
+                </Button>
+              </Link>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
